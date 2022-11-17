@@ -18,7 +18,7 @@ cd cpds-analyzer
 make
 ```
 
-编译完成后的`cpds-analyzer`在`bin`目录中
+编译完成后的`cpds-analyzer`在`out`目录中
 
 #### 参与贡献
 

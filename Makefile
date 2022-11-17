@@ -1,5 +1,5 @@
 PROJECT="cpds-analyzer"
-BIN=./bin/$(PROJECT)
+OUT=./out/$(PROJECT)
 
 BUILD_LDFLAGS := "-s -w"
 
@@ -9,10 +9,10 @@ all: clean build
 .PHONY: build
 build: 
 	@echo "Building $(PROJECT)"
-	@go build -ldflags=$(BUILD_LDFLAGS) -o $(BIN) ./cmd/main.go
+	@go build -ldflags=$(BUILD_LDFLAGS) -o $(OUT) ./cmd/main.go
 
 clean:
 	@echo "clean"
-	@rm -rf ./bin
+	@rm -rf ./out
 
 default: build
