@@ -9,7 +9,7 @@ all: clean build
 .PHONY: build
 build: 
 	@echo "Building $(PROJECT)"
-	@go build -ldflags=$(BUILD_LDFLAGS) -o $(OUT) ./cmd/main.go
+	@go build -ldflags=$(BUILD_LDFLAGS) -o $(OUT) ./cmd/$(PROJECT)/main.go
 
 clean:
 	@echo "clean"
