@@ -4,11 +4,13 @@ import (
 	"os"
 
 	"gitee.com/cpds/cpds-analyzer/analyzer"
+	"gitee.com/cpds/cpds-analyzer/config"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 func newAnalyzer() (*cobra.Command, error) {
+	opts := config.NewOptions()
 	cmd := &cobra.Command{
 		Use:                   "cpds-analyzer [OPTIONS]",
 		Short:                 "Analyze exceptions for Container Problem Detect System",
@@ -18,9 +20,12 @@ func newAnalyzer() (*cobra.Command, error) {
 		DisableFlagsInUseLine: true,
 		Args:                  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return analyzer.RunAnalyzer()
+			return analyzer.RunAnalyzer(opts)
 		},
 	}
+	flags := cmd.Flags()
+	flags.BoolP("version", "v", false, "Print version information and quit")
+	opts.InstallFlags(flags)
 
 	return cmd, nil
 }
