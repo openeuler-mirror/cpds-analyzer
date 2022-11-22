@@ -8,19 +8,19 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func RunAnalyzer(opts *config.Options) error {
-	if err := configureLogLevel(opts); err != nil {
+func RunAnalyzer(conf *config.Config) error {
+	if err := configureLogLevel(conf); err != nil {
 		return err
 	}
 
-	if opts.Debug {
+	if conf.Debug {
 		enableDebug()
 		logrus.Debugf("Enable debug mode")
 	}
 
 	logrus.Infof("Starting cpds-analyzer......")
-	logrus.Infof("Using config: database address: %s, database port: %s", opts.DatabaseAddress, opts.DatabasePort)
-	logrus.Infof("Using config: bind address: %s, listening port: %s", opts.BindAddress, opts.Port)
+	logrus.Infof("Using config: database address: %s, database port: %s", conf.DatabaseAddress, conf.DatabasePort)
+	logrus.Infof("Using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
 	// TODO: complete this function
 	return nil
 }
@@ -45,11 +45,11 @@ func isDebugEnabled() bool {
 }
 
 // configureLogLevel "debug"|"info"|"warn"|"error"|"fatal", default: "info"
-func configureLogLevel(opts *config.Options) error {
-	if opts.LogLevel != "" {
-		lvl, err := logrus.ParseLevel(opts.LogLevel)
+func configureLogLevel(conf *config.Config) error {
+	if conf.LogLevel != "" {
+		lvl, err := logrus.ParseLevel(conf.LogLevel)
 		if err != nil {
-			return fmt.Errorf("unable to parse logging level: %s", opts.LogLevel)
+			return fmt.Errorf("unable to parse logging level: %s", conf.LogLevel)
 		}
 		logrus.SetLevel(lvl)
 	} else {
