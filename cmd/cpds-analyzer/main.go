@@ -10,7 +10,7 @@ import (
 )
 
 func newAnalyzer() (*cobra.Command, error) {
-	opts := config.NewOptions()
+	conf := config.New()
 	cmd := &cobra.Command{
 		Use:                   "cpds-analyzer [OPTIONS]",
 		Short:                 "Analyze exceptions for Container Problem Detect System",
@@ -20,12 +20,12 @@ func newAnalyzer() (*cobra.Command, error) {
 		DisableFlagsInUseLine: true,
 		Args:                  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return analyzer.RunAnalyzer(opts)
+			return analyzer.RunAnalyzer(conf)
 		},
 	}
+
 	flags := cmd.Flags()
-	flags.BoolP("version", "v", false, "Print version information and quit")
-	opts.InstallFlags(flags)
+	conf.LoadConfig(flags)
 
 	return cmd, nil
 }
