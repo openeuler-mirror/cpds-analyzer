@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -33,9 +35,10 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 	viper.SetConfigType("json")
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil {             // Handle errors reading the config file
-		logrus.Infof("Failed to read config file: %s, using default configuration", err)
+		logrus.Infof("Failed to read config file: %s", err)
+		os.Exit(1)
 	}
-	c = &Config{
+	*c = Config{
 		Debug:            viper.GetBool("debug"),
 		LogLevel:         viper.GetString("log-level"),
 		DatabaseAddress:  viper.GetString("db-address"),
