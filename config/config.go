@@ -1,7 +1,11 @@
 package config
 
 import (
+<<<<<<< HEAD
 	"fmt"
+=======
+	"os"
+>>>>>>> add_flag
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
