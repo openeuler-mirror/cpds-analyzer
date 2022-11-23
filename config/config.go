@@ -1,9 +1,17 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+)
+
+var (
+	defaultConfigPath = "/etc/cpds/"
+	defaultConfigName = "cpds-analyzer.json"
+	defaultConfigType = "json"
 )
 
 type Config struct {
@@ -15,6 +23,7 @@ type Config struct {
 	DatabasePassword string
 	BindAddress      string
 	Port             string
+	ConfigPath       string
 }
 
 func New() *Config {
@@ -22,20 +31,28 @@ func New() *Config {
 }
 
 func (c *Config) LoadConfig(flags *pflag.FlagSet) {
-	c.installFlags(flags)
-	viper.BindPFlags(flags)
+	c.installFlags()
 	c.parseConfigFile(flags)
 }
 
 func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
-	viper.AddConfigPath(".")
-	viper.SetConfigName("cpds-analyzer.json")
-	viper.SetConfigType("json")
+	if path, err := flags.GetString("config-path"); err != nil {
+		// using defalut config file path
+		viper.AddConfigPath(defaultConfigPath)
+	} else {
+		viper.AddConfigPath(path)
+	}
+	viper.BindPFlags(flags)
+	viper.SetConfigType(defaultConfigType)
+	viper.SetConfigName(defaultConfigName)
+
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil {             // Handle errors reading the config file
-		logrus.Infof("Failed to read config file: %s, using default configuration", err)
+		logrus.Errorf("Failed to read config file: %s", err)
+		panic(fmt.Errorf("Failed to read config file: %w", err))
 	}
-	c = &Config{
+
+	*c = Config{
 		Debug:            viper.GetBool("debug"),
 		LogLevel:         viper.GetString("log-level"),
 		DatabaseAddress:  viper.GetString("db-address"),
