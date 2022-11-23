@@ -4,7 +4,8 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func (c *Config) installFlags(flags *pflag.FlagSet) {
+func (c *Config) installFlags() {
+	pflag.StringVar(&c.ConfigPath, "config-path", defaultConfigPath, "Configuration file Path")
 	pflag.BoolVarP(&c.Debug, "debug", "D", false, "Enable debug mode")
 	pflag.StringVarP(&c.LogLevel, "log-level", "l", "info", `Set the logging level ("debug"|"info"|"warn"|"error"|"fatal")`)
 
