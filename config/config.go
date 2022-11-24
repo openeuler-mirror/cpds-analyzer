@@ -50,10 +50,19 @@ func (c *Config) LoadConfig(flags *pflag.FlagSet) {
 func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 	viper.BindPFlags(flags)
 
-	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil {             // Handle errors reading the config file
-		logrus.Infof("Failed to read config file: %s", err)
-		panic(fmt.Errorf("fatal error config file: %w", err))
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not found; ignore error, Using defalut config file path
+			// Using defalut config file path
+			logrus.Warnf("Config file '%s' not found, Using defalut config file path: '%s'", c.ConfigPath, defaultConfigPath)
+		} else {
+
+			// Config file was found but another error was produced
+			logrus.Errorf("fatal error config file: %w", err)
+			panic(fmt.Errorf("fatal error config file: %w", err))
+		}
+	} else {
+		logrus.Infof("Using config file: %s", viper.ConfigFileUsed())
 	}
 
 	*c = Config{
