@@ -4,18 +4,11 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+
+	"gitee.com/cpds/cpds-analyzer/pkgs/rules"
 )
 
-type Rules struct {
-	Cpu_max    int `json:"cpu_max"`
-	Cpu_min    int `json:"cpu_min"`
-	Disk_max   int `json:"disk_max"`
-	Disk_min   int `json:"disk_min"`
-	Memory_max int `json:"mem_max"`
-	Memory_min int `json:"mem_min"`
-}
-
-func (r *Rules) loadRules(path string) error {
+func LoadRules(r *rules.Rules, path string) error {
 	jsonFile, err := os.Open(path)
 	if err != nil {
 		return err
@@ -34,7 +27,7 @@ func (r *Rules) loadRules(path string) error {
 	return nil
 }
 
-func (r *Rules) saveRules(path string) error {
+func SaveRules(r *rules.Rules, path string) error {
 	saveData, err := json.Marshal(r)
 	if err != nil {
 		return err
