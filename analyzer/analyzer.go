@@ -2,9 +2,11 @@ package analyzer
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"gitee.com/cpds/cpds-analyzer/config"
+	restful "github.com/emicklei/go-restful"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,7 +23,18 @@ func RunAnalyzer(conf *config.Config) error {
 	logrus.Infof("Starting cpds-analyzer......")
 	logrus.Infof("Using config: database address: %s, database port: %s", conf.DatabaseAddress, conf.DatabasePort)
 	logrus.Infof("Using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
-	// TODO: complete this function
+
+	ws := new(restful.WebService)
+	restful.Add(ws)
+	server := &http.Server{
+		Addr:    ":" + conf.Port,
+		Handler: nil,
+	}
+	if err := server.ListenAndServe(); err != nil {
+		logrus.Infof("Start listening on https://%s:%s", conf.BindAddress, conf.Port)
+	}
+	defer server.Close()
+
 	return nil
 }
 
