@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"gitee.com/cpds/cpds-analyzer/config"
+	"gitee.com/cpds/cpds-analyzer/pkgs/rules"
 	restful "github.com/emicklei/go-restful"
 	"github.com/sirupsen/logrus"
 )
@@ -24,14 +25,19 @@ func RunAnalyzer(conf *config.Config) error {
 	logrus.Infof("Using config: database address: %s, database port: %s", conf.DatabaseAddress, conf.DatabasePort)
 	logrus.Infof("Using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
 
-	ws := new(restful.WebService)
-	restful.Add(ws)
+	wsContainer := restful.NewContainer()
+	r := rules.GetRules()
+	r.RegisterTo(wsContainer)
+
+	// Add container filter to respond to OPTIONS
+	wsContainer.Filter(wsContainer.OPTIONSFilter)
+
 	server := &http.Server{
 		Addr:    ":" + conf.Port,
-		Handler: nil,
+		Handler: wsContainer,
 	}
 	if err := server.ListenAndServe(); err != nil {
-		logrus.Infof("Start listening on https://%s:%s", conf.BindAddress, conf.Port)
+		logrus.Infof("Failed to listen https://%s:%s: %w", conf.BindAddress, conf.Port, err)
 	}
 	defer server.Close()
 
