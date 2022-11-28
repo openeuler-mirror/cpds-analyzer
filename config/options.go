@@ -15,5 +15,5 @@ func (c *Config) installFlags(flags *pflag.FlagSet) {
 	flags.StringVar(&c.DatabasePassword, "db-password", "", "Database password")
 
 	flags.StringVar(&c.BindAddress, "bind-address", "0.0.0.0", "Server bind address")
-	flags.StringVarP(&c.Port, "port", "p", "9090", "Port number to listen")
+	flags.StringVarP(&c.Port, "port", "p", "19080", "Port number to listen")
 }
