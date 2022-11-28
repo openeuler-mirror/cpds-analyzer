@@ -1,9 +1,5 @@
 package rules
 
-import (
-	"github.com/emicklei/go-restful"
-)
-
 type Rules struct {
 	Cpu_max    int `json:"cpu_max"`
 	Cpu_min    int `json:"cpu_min"`
@@ -13,13 +9,11 @@ type Rules struct {
 	Memory_min int `json:"mem_min"`
 }
 
-func GetRules() *Rules {
-	return &Rules{}
+type Interface interface {
+	LoadRules(path string) error
+	SaveRules(path string) error
 }
 
-func (r *Rules) RegisterTo(container *restful.Container) {
-	ws := new(restful.WebService)
-	ws.Path("/rules")
-
-	container.Add(ws)
+func New() *Rules {
+	return &Rules{}
 }
