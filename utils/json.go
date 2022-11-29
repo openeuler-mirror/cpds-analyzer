@@ -1,14 +1,12 @@
-package config
+package utils
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
-
-	"gitee.com/cpds/cpds-analyzer/pkgs/rules"
 )
 
-func LoadRules(r *rules.Rules, path string) error {
+func LoadJsonFromFile(path string, obj interface{}) error {
 	jsonFile, err := os.Open(path)
 	if err != nil {
 		return err
@@ -20,15 +18,15 @@ func LoadRules(r *rules.Rules, path string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(jsonData, r); err != nil {
+	if err := json.Unmarshal(jsonData, &obj); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func SaveRules(r *rules.Rules, path string) error {
-	saveData, err := json.Marshal(r)
+func SaveAsJsonFile(path string, obj interface{}) error {
+	saveData, err := json.Marshal(obj)
 	if err != nil {
 		return err
 	}
