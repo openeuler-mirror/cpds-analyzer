@@ -1,0 +1,8 @@
+{
+    "cpu_max": 80,
+    "cpu_min": 60,
+    "disk_max": 95,
+    "disk_min": 85,
+    "mem_max": 80,
+    "mem_min": 50
+}
