@@ -25,6 +25,8 @@ type Config struct {
 	BindAddress      string
 	Port             string
 	ConfigPath       string
+	CertFile         string
+	KeyFile          string
 }
 
 func New() *Config {
@@ -74,5 +76,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 		DatabasePassword: viper.GetString("db-password"),
 		BindAddress:      viper.GetString("bind-address"),
 		Port:             viper.GetString("port"),
+		CertFile:         viper.GetString("cert-file"),
+		KeyFile:          viper.GetString("key-file"),
 	}
 }
