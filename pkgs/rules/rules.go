@@ -1,5 +1,7 @@
 package rules
 
+import "gitee.com/cpds/cpds-analyzer/utils"
+
 type Rules struct {
 	Cpu_max    int `json:"cpu_max"`
 	Cpu_min    int `json:"cpu_min"`
@@ -9,11 +11,13 @@ type Rules struct {
 	Memory_min int `json:"mem_min"`
 }
 
-type Interface interface {
-	LoadRules(path string) error
-	SaveRules(path string) error
-}
-
 func New() *Rules {
 	return &Rules{}
+}
+
+func (r *Rules) LoadRules(path string) error {
+	if err := utils.LoadJsonFromFile(path, r); err != nil {
+		return err
+	}
+	return nil
 }
