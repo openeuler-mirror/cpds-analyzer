@@ -32,9 +32,11 @@ func RunAnalyzer(conf *config.Config) error {
 	// Add container filter to respond to OPTIONS
 	wsContainer.Filter(wsContainer.OPTIONSFilter)
 
+	tlsconf := config.GetTlsConf()
 	server := &http.Server{
-		Addr:    ":" + conf.Port,
-		Handler: wsContainer,
+		Addr:      ":" + conf.Port,
+		Handler:   wsContainer,
+		TLSConfig: tlsconf,
 	}
 	if err := server.ListenAndServeTLS(conf.CertFile, conf.KeyFile); err != nil {
 		logrus.Infof("Failed to listen https://%s:%s: %w", conf.BindAddress, conf.Port, err)
