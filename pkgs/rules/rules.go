@@ -11,6 +11,10 @@ type Rules struct {
 	Memory_min int `json:"mem_min"`
 }
 
+const (
+	defaultRulesPath = "/etc/cpds/rules.json"
+)
+
 func New() *Rules {
 	return &Rules{}
 }
@@ -20,4 +24,8 @@ func (r *Rules) LoadRules(path string) error {
 		return err
 	}
 	return nil
+}
+
+func (r *Rules) GetDefaultRulesPath() string {
+	return defaultRulesPath
 }
