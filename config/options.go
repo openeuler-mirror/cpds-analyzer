@@ -16,4 +16,9 @@ func (c *Config) installFlags(flags *pflag.FlagSet) {
 
 	flags.StringVar(&c.BindAddress, "bind-address", "0.0.0.0", "Server bind address")
 	flags.StringVarP(&c.Port, "port", "p", "19080", "Port number to listen")
+
+	certPath, keyPath := GetCertPath(), GetKeyPath()
+	// TODO: make certificate and key file by openssl instead of using certificate template
+	flags.StringVar(&c.CertFile, "cert-file", certPath, "identify HTTPS client using this SSL certificate file")
+	flags.StringVar(&c.KeyFile, "key-file", keyPath, "identify HTTPS client using this SSL key file")
 }

@@ -1,6 +1,6 @@
 package config
 
-const (
+var (
 	certPath = "/etc/cpds/ca/cert.pem"
 	keyPath  = "/etc/cpds/ca/key.pem"
 )
