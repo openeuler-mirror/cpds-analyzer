@@ -1,22 +1,25 @@
 # cpds-analyzer
 
 #### Description
-Analyze exceptions for Container Problem Detect System
+cpds-analyzer is a container fault/sub-health diagnostic component developed for the CPDS (Container Problem Detect System) container fault detection system.
 
-#### Software Architecture
-Software architecture description
+This component processes the abnormal data collected by cpds-detector (anomaly detection component) according to the diagnostic rules issued by cpds-dashboard (user interaction component), and judges whether the cluster node is in a container failure/sub-health state.
 
-#### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### Build from source
 
-#### Instructions
+`cpds-analyzer` is only supported on Linux and must be built with Go version 1.18 or higher.
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```bash
+# create a 'gitee.com/cpds' in your GOPATH/src
+cd $GOPATH/gitee.com/cpds
+git clone https://gitee.com/openeuler/cpds-analyzer.git
+cd cpds-analyzer
+
+make
+```
+Finally, the compiled `cpds-analyzer` is in the `out` directory.
+
 
 #### Contribution
 
@@ -24,13 +27,3 @@ Software architecture description
 2.  Create Feat_xxx branch
 3.  Commit your code
 4.  Create Pull Request
-
-
-#### Gitee Feature
-
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
