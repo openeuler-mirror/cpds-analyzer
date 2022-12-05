@@ -2,6 +2,9 @@ package config
 
 import (
 	"fmt"
+	"net"
+	"os"
+	"strconv"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -79,4 +82,36 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 		CertFile:         viper.GetString("cert-file"),
 		KeyFile:          viper.GetString("key-file"),
 	}
+}
+
+func (c *Config) CheckConfig() error {
+	if net.ParseIP(c.DatabaseAddress) == nil {
+		return fmt.Errorf("invalid flag: db-address: %s", c.DatabaseAddress)
+	}
+
+	if p, err := strconv.Atoi(c.DatabasePort); err != nil {
+		return fmt.Errorf("invalid flag: db-port: %s, %w", c.DatabasePort, err)
+	} else if p < 0 || p > 65535 {
+		return fmt.Errorf("invalid port number range: %s, should be 0 - 65535", c.DatabasePort)
+	}
+
+	if net.ParseIP(c.BindAddress) == nil {
+		return fmt.Errorf("invalid flag: bind-address: %s", c.BindAddress)
+	}
+
+	if p, err := strconv.Atoi(c.Port); err != nil {
+		return err
+	} else if p < 0 || p > 65535 {
+		return fmt.Errorf("invalid port number range: %s, should be 0 - 65535", c.Port)
+	}
+
+	if _, err := os.Stat(c.CertFile); err != nil {
+		return fmt.Errorf("invalid flag: cert-file: %s, %w", c.CertFile, err)
+	}
+
+	if _, err := os.Stat(c.KeyFile); err != nil {
+		return fmt.Errorf("invalid flag: key-file: %s, %w", c.KeyFile, err)
+	}
+
+	return nil
 }

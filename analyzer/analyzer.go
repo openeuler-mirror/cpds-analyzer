@@ -13,6 +13,10 @@ import (
 )
 
 func RunAnalyzer(conf *config.Config) error {
+	if err := conf.CheckConfig(); err != nil {
+		return err
+	}
+
 	if err := configureLogLevel(conf); err != nil {
 		return err
 	}
