@@ -14,5 +14,8 @@ func AddToContainer(container *restful.Container, r *rules.Rules) {
 	webservice.Route(webservice.GET("").
 		To(handler.GetRules))
 
+	webservice.Route(webservice.PUT("").
+		To(handler.SetRules))
+
 	container.Add(webservice)
 }
