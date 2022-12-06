@@ -26,6 +26,13 @@ func (r *Rules) LoadRules(path string) error {
 	return nil
 }
 
+func (r *Rules) SetRules(path string) error {
+	if err := utils.SaveAsJsonFile(path, r); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *Rules) GetDefaultRulesPath() string {
 	return defaultRulesPath
 }
