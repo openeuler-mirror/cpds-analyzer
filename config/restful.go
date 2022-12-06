@@ -1,6 +1,10 @@
 package config
 
-import "crypto/tls"
+import (
+	"crypto/tls"
+
+	"github.com/emicklei/go-restful"
+)
 
 var (
 	certPath = "/etc/cpds/ca/cert.pem"
@@ -42,4 +46,16 @@ func GetTlsConf() *tls.Config {
 	}
 
 	return tlsconf
+}
+
+func GetCors(c *restful.Container) restful.CrossOriginResourceSharing {
+	cors := restful.CrossOriginResourceSharing{
+		ExposeHeaders:  []string{"X-My-Header"},
+		AllowedHeaders: []string{"Content-Type", "Accept"},
+		AllowedMethods: []string{"GET", "POST", "DELETE", "PUT"},
+		CookiesAllowed: false,
+		Container:      c,
+	}
+
+	return cors
 }
