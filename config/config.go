@@ -85,7 +85,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 }
 
 func (c *Config) CheckConfig() error {
-	if net.ParseIP(c.DatabaseAddress) == nil {
+	if net.ParseIP(c.DatabaseAddress) == nil && c.DatabaseAddress != "localhost" {
 		return fmt.Errorf("invalid flag: db-address: %s", c.DatabaseAddress)
 	}
 
