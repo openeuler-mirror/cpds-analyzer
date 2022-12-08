@@ -2,6 +2,9 @@
 ## explicit
 github.com/emicklei/go-restful
 github.com/emicklei/go-restful/log
+# github.com/emicklei/go-restful-swagger12 v0.0.0-20201014110547-68ccff494617
+## explicit
+github.com/emicklei/go-restful-swagger12
 # github.com/fsnotify/fsnotify v1.6.0
 ## explicit; go 1.16
 github.com/fsnotify/fsnotify

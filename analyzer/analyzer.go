@@ -33,6 +33,7 @@ func RunAnalyzer(conf *config.Config) error {
 	wsContainer := restful.NewContainer()
 	installAPIs(wsContainer)
 	setRestfulConf(wsContainer)
+	conf.RegisterSwagger(wsContainer)
 
 	tlsconf := config.GetTlsConf()
 	server := &http.Server{
