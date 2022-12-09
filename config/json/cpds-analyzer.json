@@ -3,10 +3,10 @@
     "log-level": "info",
     "db-address": "localhost",
     "db-port": "3306",
-    "db-user": "admin",
-    "db-password": "",
+    "db-user": "root",
+    "db-password": "root",
     "bind-address": "0.0.0.0",
     "port": "19080",
-    "cert-file": "/etc/cpds/ca/cert.pem",
-    "key-file": "/etc/cpds/ca/key.pem"
+    "cert-file": "/etc/cpds/cpds/cpds-analyzer/ca/cert.pem",
+    "key-file": "/etc/cpds/cpds-analyzer/ca/key.pem"
 }
