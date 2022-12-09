@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/emicklei/go-restful v2.16.0+incompatible
+	github.com/emicklei/go-restful-swagger12 v0.0.0-20201014110547-68ccff494617
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/pflag v1.0.5
