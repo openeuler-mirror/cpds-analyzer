@@ -1,28 +1,46 @@
-package mariadb
+package utils
 
 import (
 	"fmt"
+	"strconv"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 type Mariadb struct {
+	conf *Config
+	db   *gorm.DB
+}
+
+type Config struct {
 	DatabaseAddress  string
 	DatabasePort     string
 	DatabaseUser     string
 	DatabasePassword string
 }
 
-func (m *Mariadb) Connect() (*gorm.DB, error) {
+func NewDB(dbAddr string, dbPort int, dbUser string, dbPasswd string) *Mariadb {
+	c := &Config{
+		DatabaseAddress:  dbAddr,
+		DatabasePort:     strconv.Itoa(dbPort),
+		DatabaseUser:     dbUser,
+		DatabasePassword: dbPasswd,
+	}
+	return &Mariadb{
+		conf: c,
+	}
+}
+
+func (m *Mariadb) Connect() error {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/gorm?charset=utf8&parseTime=True&loc=Local",
-		m.DatabaseUser,
-		m.DatabasePassword,
-		m.DatabaseAddress,
-		m.DatabasePort,
+		m.conf.DatabaseUser,
+		m.conf.DatabasePassword,
+		m.conf.DatabaseAddress,
+		m.conf.DatabasePort,
 	)
 
-	db, err := gorm.Open(mysql.New(mysql.Config{
+	d, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,
 		DefaultStringSize:         256,   // default size for string fields
 		DisableDatetimePrecision:  true,  // disable datetime precision, which not supported before MySQL 5.6
@@ -31,7 +49,17 @@ func (m *Mariadb) Connect() (*gorm.DB, error) {
 		SkipInitializeWithVersion: false, // auto configure based on currently MySQL version
 	}), &gorm.Config{})
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return db, nil
+	*m = Mariadb{
+		db: d,
+	}
+	return nil
+}
+
+func (m *Mariadb) InitDBTables(db *gorm.DB, table interface{}) error {
+	if err := db.AutoMigrate(&table); err != nil {
+		return err
+	}
+	return nil
 }
