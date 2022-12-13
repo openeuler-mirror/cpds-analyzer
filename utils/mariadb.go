@@ -6,6 +6,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 type Mariadb struct {
@@ -40,14 +41,25 @@ func (m *Mariadb) Connect() error {
 		m.conf.DatabasePort,
 	)
 
-	d, err := gorm.Open(mysql.New(mysql.Config{
+	mysqlConfig := mysql.Config{
 		DSN:                       dsn,
 		DefaultStringSize:         256,   // default size for string fields
 		DisableDatetimePrecision:  true,  // disable datetime precision, which not supported before MySQL 5.6
 		DontSupportRenameIndex:    true,  // drop & create when rename index, rename index not supported  MariaDB
 		DontSupportRenameColumn:   true,  // `change` when rename column, rename column not supported MariaDB
 		SkipInitializeWithVersion: false, // auto configure based on currently MySQL version
-	}), &gorm.Config{})
+	}
+
+	gormConfig := gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		PrepareStmt:                              true,
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   "t_",
+			SingularTable: true,
+		},
+	}
+
+	d, err := gorm.Open(mysql.New(mysqlConfig), &gormConfig)
 	if err != nil {
 		return err
 	}
