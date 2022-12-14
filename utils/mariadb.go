@@ -19,7 +19,12 @@ type Config struct {
 	DatabasePort     string
 	DatabaseUser     string
 	DatabasePassword string
+	DatabaseName     string
 }
+
+const (
+	defaultDatabaseName = "cpds"
+)
 
 func NewDB(dbAddr string, dbPort int, dbUser string, dbPasswd string) *Mariadb {
 	c := &Config{
@@ -27,6 +32,7 @@ func NewDB(dbAddr string, dbPort int, dbUser string, dbPasswd string) *Mariadb {
 		DatabasePort:     strconv.Itoa(dbPort),
 		DatabaseUser:     dbUser,
 		DatabasePassword: dbPasswd,
+		DatabaseName:     defaultDatabaseName,
 	}
 	return &Mariadb{
 		conf: c,
@@ -34,11 +40,12 @@ func NewDB(dbAddr string, dbPort int, dbUser string, dbPasswd string) *Mariadb {
 }
 
 func (m *Mariadb) Connect() error {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/gorm?charset=utf8&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		m.conf.DatabaseUser,
 		m.conf.DatabasePassword,
 		m.conf.DatabaseAddress,
 		m.conf.DatabasePort,
+		m.conf.DatabaseName,
 	)
 
 	mysqlConfig := mysql.Config{
