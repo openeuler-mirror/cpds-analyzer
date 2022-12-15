@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"gitee.com/cpds/cpds-analyzer/config"
+	commonv1 "gitee.com/cpds/cpds-analyzer/pkgs/apis/common/v1"
 	rulesv1 "gitee.com/cpds/cpds-analyzer/pkgs/apis/rules/v1"
 	"gitee.com/cpds/cpds-analyzer/pkgs/rules"
 	restful "github.com/emicklei/go-restful"
@@ -94,6 +95,7 @@ func configureLogLevel(conf *config.Config) error {
 func installAPIs(c *restful.Container) {
 	logrus.Debug("Installing APIs")
 	r := rules.New()
+	commonv1.AddToContainer(c)
 	rulesv1.AddToContainer(c, r)
 }
 
