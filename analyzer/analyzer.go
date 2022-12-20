@@ -3,9 +3,9 @@ package analyzer
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
+	"gitee.com/cpds/cpds-analyzer/analyzer/debug"
 	"gitee.com/cpds/cpds-analyzer/config"
 	commonv1 "gitee.com/cpds/cpds-analyzer/pkgs/apis/common/v1"
 	rulesv1 "gitee.com/cpds/cpds-analyzer/pkgs/apis/rules/v1"
@@ -36,7 +36,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 	}
 
 	if conf.Debug {
-		enableDebug()
+		debug.Enable()
 		logrus.Debugf("Enable debug mode")
 	}
 
@@ -62,25 +62,6 @@ func (d *Analyzer) Run(conf *config.Config) error {
 	defer server.Close()
 
 	return nil
-}
-
-// enableDebug sets the DEBUG env var to true
-// and makes the logger to log at debug level.
-func enableDebug() {
-	os.Setenv("DEBUG", "1")
-	logrus.SetLevel(logrus.DebugLevel)
-}
-
-// disableDebug sets the DEBUG env var to false
-// and makes the logger to log at info level.
-func disableDebug() {
-	os.Setenv("DEBUG", "")
-	logrus.SetLevel(logrus.InfoLevel)
-}
-
-// isDebugEnabled checks whether the debug flag is set or not.
-func isDebugEnabled() bool {
-	return os.Getenv("DEBUG") != ""
 }
 
 // configureLogLevel "debug"|"info"|"warn"|"error"|"fatal", default: "info"
