@@ -20,3 +20,13 @@ func TestEnable(t *testing.T) {
 		t.Fatalf("expected log level %v, got %v\n", logrus.DebugLevel, logrus.GetLevel())
 	}
 }
+
+func TestDisable(t *testing.T) {
+	Disable()
+	if os.Getenv("DEBUG") != "" {
+		t.Fatalf("expected DEBUG=\"\", got %s\n", os.Getenv("DEBUG"))
+	}
+	if logrus.GetLevel() != logrus.InfoLevel {
+		t.Fatalf("expected log level %v, got %v\n", logrus.InfoLevel, logrus.GetLevel())
+	}
+}
