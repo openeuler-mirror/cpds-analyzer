@@ -3,32 +3,9 @@ package main
 import (
 	"os"
 
-	"gitee.com/cpds/cpds-analyzer/analyzer"
-	"gitee.com/cpds/cpds-analyzer/config"
+	"gitee.com/cpds/cpds-analyzer/cmd/cpds-analyzer/app"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
 )
-
-func newAnalyzer() (*cobra.Command, error) {
-	conf := config.New()
-	cmd := &cobra.Command{
-		Use:                   "cpds-analyzer [OPTIONS]",
-		Short:                 "Analyze exceptions for Container Problem Detect System",
-		Version:               "undefined",
-		SilenceUsage:          true,
-		SilenceErrors:         true,
-		DisableFlagsInUseLine: true,
-		Args:                  cobra.NoArgs,
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return analyzer.RunAnalyzer(conf)
-		},
-	}
-
-	flags := cmd.Flags()
-	conf.LoadConfig(flags)
-
-	return cmd, nil
-}
 
 func initLogging() {
 	// Log as JSON instead of the default ASCII formatter.
@@ -41,7 +18,7 @@ func initLogging() {
 func main() {
 	initLogging()
 
-	cmd, err := newAnalyzer()
+	cmd, err := app.NewAnalyzer()
 	if err != nil {
 		logrus.Error(err)
 		// if cannot create new Analyzer, just exit
