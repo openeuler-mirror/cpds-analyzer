@@ -18,7 +18,15 @@ var (
 	serverTimeout = 5000 * time.Millisecond
 )
 
-func RunAnalyzer(conf *config.Config) error {
+type Analyzer struct {
+	*config.Config
+}
+
+func NewAnalyzer() *Analyzer {
+	return &Analyzer{}
+}
+
+func (d *Analyzer) Run(conf *config.Config) error {
 	if err := conf.CheckConfig(); err != nil {
 		return err
 	}
