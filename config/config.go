@@ -63,8 +63,8 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 		} else {
 
 			// Config file was found but another error was produced
-			logrus.Errorf("fatal error config file: %w", err)
-			panic(fmt.Errorf("fatal error config file: %w", err))
+			logrus.Errorf("fatal error config file: %s", err)
+			panic(fmt.Errorf("fatal error config file: %s", err))
 		}
 	} else {
 		logrus.Infof("Using config file: %s", viper.ConfigFileUsed())
@@ -90,7 +90,7 @@ func (c *Config) CheckConfig() error {
 	}
 
 	if p, err := strconv.Atoi(c.DatabasePort); err != nil {
-		return fmt.Errorf("invalid flag: db-port: %s, %w", c.DatabasePort, err)
+		return fmt.Errorf("invalid flag: db-port: %s, %s", c.DatabasePort, err)
 	} else if p < 0 || p > 65535 {
 		return fmt.Errorf("invalid port number range: %s, should be 0 - 65535", c.DatabasePort)
 	}
@@ -106,11 +106,11 @@ func (c *Config) CheckConfig() error {
 	}
 
 	if _, err := os.Stat(c.CertFile); err != nil {
-		return fmt.Errorf("invalid flag: cert-file: %s, %w", c.CertFile, err)
+		return fmt.Errorf("invalid flag: cert-file: %s, %s", c.CertFile, err)
 	}
 
 	if _, err := os.Stat(c.KeyFile); err != nil {
-		return fmt.Errorf("invalid flag: key-file: %s, %w", c.KeyFile, err)
+		return fmt.Errorf("invalid flag: key-file: %s, %s", c.KeyFile, err)
 	}
 
 	return nil
