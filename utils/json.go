@@ -31,7 +31,7 @@ func SaveAsJsonFile(path string, obj interface{}) error {
 		return err
 	}
 
-	if err := ioutil.WriteFile(path, saveData, os.ModeAppend); err != nil {
+	if err := ioutil.WriteFile(path, saveData, os.ModeAppend|os.FileMode(0666)); err != nil {
 		return err
 	}
 
