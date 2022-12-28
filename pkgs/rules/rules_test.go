@@ -20,3 +20,19 @@ func TestSetRules(t *testing.T) {
 	assert.Equal(t, string(j), string(f))
 	os.Remove(testFile)
 }
+
+func TestLoadRules(t *testing.T) {
+	testFile := "./test.json"
+	testData := "{\"cpu_max\":90,\"cpu_min\":50,\"disk_max\":85,\"disk_min\":60,\"mem_max\":80,\"mem_min\":70}"
+	f, _ := os.Create(testFile)
+	defer f.Close()
+	f.Write([]byte(testData))
+
+	r := &Rules{}
+	r.LoadRules(testFile)
+
+	assert.Equal(t, r.Cpu_max, 90)
+	assert.Equal(t, r.Disk_min, 60)
+	assert.Equal(t, 80, r.Memory_max)
+	os.Remove(testFile)
+}
