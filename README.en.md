@@ -1,4 +1,7 @@
 # cpds-analyzer
+<p align="center">
+<a href="https://gitee.com/openeuler/Cpds"><img src="docs/images/cpds-icon.png" alt="banner" width="250px"></a>
+</p>
 
 #### Description
 cpds-analyzer is a container fault/sub-health diagnostic component developed for the CPDS (Container Problem Detect System) container fault detection system.
