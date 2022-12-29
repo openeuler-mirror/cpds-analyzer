@@ -1,4 +1,7 @@
 # cpds-analyzer
+<p align="center">
+<a href="https://gitee.com/openeuler/Cpds"><img src="docs/images/cpds-icon.png" alt="banner" width="250px"></a>
+</p>
 
 #### 介绍
 cpds-analyzer是为CPDS(Container Problem Detect System)容器故障检测系统开发的容器故障/亚健康诊断组件。
