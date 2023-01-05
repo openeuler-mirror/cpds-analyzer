@@ -18,7 +18,7 @@ func GetMean(nums ...float64) (float64, error) {
 	sum := GetSum(nums...)
 	n := len(nums)
 	if n == 0 {
-		return 0, fmt.Errorf("the divisor cannot be 0")
+		return -1, fmt.Errorf("the divisor cannot be 0")
 	}
 	return sum / float64(n), nil
 }
@@ -44,14 +44,14 @@ func GetVariance(nums ...float64) (float64, error) {
 	}
 	m, err := GetMean(nums...)
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
 	parameters["m"] = m
 	parameters["n"] = len(nums)
 
 	result, err := expr.Evaluate(parameters)
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
 	return result.(float64), nil
 }
