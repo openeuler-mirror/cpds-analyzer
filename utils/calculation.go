@@ -55,3 +55,20 @@ func GetVariance(nums ...float64) (float64, error) {
 	}
 	return result.(float64), nil
 }
+
+func GetStandardDeviation(nums ...float64) (float64, error) {
+	e := "[variance] ** 0.5"
+	expr, _ := govaluate.NewEvaluableExpression(e)
+	parameters := make(map[string]interface{})
+	variance, err := GetVariance(nums...)
+	if err != nil {
+		return -1, err
+	}
+	parameters["variance"] = variance
+
+	result, err := expr.Evaluate(parameters)
+	if err != nil {
+		return -1, err
+	}
+	return result.(float64), nil
+}
