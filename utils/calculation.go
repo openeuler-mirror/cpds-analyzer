@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 
 	"github.com/Knetic/govaluate"
@@ -71,4 +72,16 @@ func GetStandardDeviation(nums ...float64) (float64, error) {
 		return -1, err
 	}
 	return result.(float64), nil
+}
+
+func GetMaxValue(nums ...float64) (float64, error) {
+	if n := len(nums); n == 0 {
+		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+	}
+
+	max := nums[0]
+	for _, v := range nums {
+		max = math.Max(max, v)
+	}
+	return max, nil
 }
