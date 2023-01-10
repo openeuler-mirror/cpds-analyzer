@@ -85,3 +85,15 @@ func GetMaxValue(nums ...float64) (float64, error) {
 	}
 	return max, nil
 }
+
+func GetMinValue(nums ...float64) (float64, error) {
+	if n := len(nums); n == 0 {
+		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+	}
+
+	min := nums[0]
+	for _, v := range nums {
+		min = math.Min(min, v)
+	}
+	return min, nil
+}
