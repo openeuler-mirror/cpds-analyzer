@@ -9,7 +9,7 @@ type Mail struct {
 	sendCloser gomail.SendCloser
 }
 
-func NewMailSender(host string, port int, userName string, password string, from string) (*Mail, error) {
+func NewMailSender(host string, port int, userName string, password string) (*Mail, error) {
 	d := gomail.NewDialer(host, port, userName, password)
 	s, err := d.Dial()
 	if err != nil {
