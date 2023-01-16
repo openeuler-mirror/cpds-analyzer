@@ -45,7 +45,10 @@ func GetVariance(nums ...float64) (float64, error) {
 		}
 		return
 	}(nums...))
-	expr, _ := govaluate.NewEvaluableExpression(e)
+	expr, err := govaluate.NewEvaluableExpression(e)
+	if err != nil {
+		return -1, err
+	}
 	parameters := make(map[string]interface{})
 
 	for index, value := range nums {
