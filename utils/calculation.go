@@ -8,15 +8,24 @@ import (
 	"github.com/Knetic/govaluate"
 )
 
-func GetSum(nums ...float64) (sum float64) {
+func GetSum(nums ...float64) (float64, error) {
+	var sum float64
+	if len(nums) == 0 {
+		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+	}
+
 	for _, v := range nums {
 		sum += v
 	}
-	return
+	return sum, nil
 }
 
 func GetMean(nums ...float64) (float64, error) {
-	sum := GetSum(nums...)
+	sum, err := GetSum(nums...)
+	if err != nil {
+		return -1, err
+	}
+
 	n := len(nums)
 	if n == 0 {
 		return -1, fmt.Errorf("the divisor cannot be 0")
