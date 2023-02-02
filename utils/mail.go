@@ -13,6 +13,7 @@ func NewMailSender(host string, port int, userName string, password string) (*Ma
 	logrus.Debug("create new mail sender")
 	logrus.Debugf("create new mail sender with host: %s", host)
 	logrus.Debugf("create new mail sender with port: %s", port)
+	logrus.Debugf("create new mail sender with user name: %s", userName)
 	d := gomail.NewDialer(host, port, userName, password)
 	s, err := d.Dial()
 	if err != nil {
