@@ -9,9 +9,7 @@ import (
 )
 
 const (
-	apiPath         = "/apidocs"
-	swaggerPath     = "/swagger/"
-	swaggerFilePath = "config/swagger-ui/dist"
+	apiPath = "/apidocs"
 )
 
 func (c *Config) RegisterSwagger(container *restful.Container) {
