@@ -67,7 +67,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 			panic(fmt.Errorf("fatal error config file: %s", err))
 		}
 	} else {
-		logrus.Infof("Using config file: %s", viper.ConfigFileUsed())
+		logrus.Infof("using config file: %s", viper.ConfigFileUsed())
 	}
 
 	*c = Config{
