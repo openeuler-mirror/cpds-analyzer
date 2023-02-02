@@ -100,6 +100,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 	logrus.Debugf("parsed bind address configuration: %s", viper.GetString("bind-address"))
 	logrus.Debugf("parsed bind port configuration: %s", viper.GetString("port"))
 	logrus.Debugf("parsed certificate file configuration: %s", viper.GetString("cert-file"))
+	logrus.Debugf("parsed secret key file configuration: %s", viper.GetString("key-file"))
 }
 
 func (c *Config) CheckConfig() error {
