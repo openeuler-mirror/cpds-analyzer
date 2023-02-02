@@ -25,7 +25,7 @@ func TestGetMean(t *testing.T) {
 	arr := make([]float64, 0)
 	m, err := GetMean(arr...)
 
-	assert.Equal(t, m, float64(-1))
+	assert.Equal(t, math.IsNaN(m), true)
 	assert.Error(t, err, "invalid argument: array cannot be empty")
 
 	arr = append(arr, 1.1, 2.2, 3.3, 4.4, 5.5)
