@@ -131,3 +131,7 @@ func ParseTimeToInt64(t ...time.Time) int64 {
 		return t[0].UnixNano() / 1e6
 	}
 }
+
+func ParseSecondTimeToInt64() int64 {
+	return time.Now().Unix()
+}
