@@ -65,6 +65,11 @@ func TestGetVariance(t *testing.T) {
 
 func TestGetStandardDeviation(t *testing.T) {
 	arr := make([]float64, 0)
+	v, err := GetVariance(arr...)
+
+	assert.Equal(t, v, float64(-1))
+	assert.Error(t, err, "invalid argument: array cannot be empty")
+
 	arr = append(arr, 1.1, 2.2, 3.3, 4.4, 5.5)
 
 	var m, sum float64
