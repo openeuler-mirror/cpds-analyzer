@@ -101,6 +101,8 @@ func TestGetMaxValue(t *testing.T) {
 func TestGetMinValue(t *testing.T) {
 	arr := make([]float64, 0)
 	min, err := GetMaxValue(arr...)
+
+	assert.Equal(t, min, float64(-1))
 	assert.Error(t, err, "invalid argument: array cannot be empty")
 
 	arr = append(arr, 1.1, 2.2, 5.5, 4.4, 3.3)
