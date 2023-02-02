@@ -31,6 +31,7 @@ func (m *Mail) Send(name, address, subject, message string) error {
 
 	logrus.Infof("send email to %s", address)
 	logrus.Debugf("subject: %s", subject)
+	logrus.Debugf("message: %s", message)
 
 	return gomail.Send(m.sendCloser, msg)
 }
