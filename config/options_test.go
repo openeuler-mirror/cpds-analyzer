@@ -18,6 +18,7 @@ func TestInstallFlags(t *testing.T) {
 		"--db-address=1.2.3.4",
 		"--port=4321",
 		"--debug",
+		"--log-level=error",
 	})
 
 	assert.Check(t, err)
@@ -25,4 +26,5 @@ func TestInstallFlags(t *testing.T) {
 	assert.Check(t, is.Equal("1.2.3.4", conf.DatabaseAddress))
 	assert.Check(t, is.Equal(conf.Port, "4321"))
 	assert.Equal(t, conf.Debug, true)
+	assert.Equal(t, conf.LogLevel, "error")
 }
