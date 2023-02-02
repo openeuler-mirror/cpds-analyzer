@@ -37,7 +37,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 
 	if conf.Debug {
 		debug.Enable()
-		logrus.Debugf("Enable debug mode")
+		logrus.Debugf("enable debug mode")
 	}
 
 	logrus.Infof("Starting cpds-analyzer......")
