@@ -22,7 +22,6 @@ func (c *Config) RegisterSwagger(container *restful.Container) {
 		ApiPath:        apiPath,
 
 		// Optionally, specify where the UI is located
-		SwaggerPath: swaggerPath,
 	}
 	swagger.RegisterSwaggerService(config, container)
 }
