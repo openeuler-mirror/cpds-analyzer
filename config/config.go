@@ -49,6 +49,7 @@ func (c *Config) LoadConfig(flags *pflag.FlagSet) {
 		} else {
 			viper.AddConfigPath(defaultConfigPath)
 		}
+		logrus.Debugf("using configuration file path: %s", c.ConfigPath)
 
 		c.parseConfigFile(flags)
 	})
