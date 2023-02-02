@@ -45,4 +45,5 @@ func TestLoadConfig(t *testing.T) {
 	assert.Equal(t, conf.DatabaseUser, "root")
 	assert.Equal(t, conf.DatabasePassword, "root")
 	assert.Equal(t, conf.BindAddress, "0.0.0.0")
+	assert.Equal(t, conf.CertFile, "/etc/cpds/cpds-detector/ca/cert.pem")
 }
