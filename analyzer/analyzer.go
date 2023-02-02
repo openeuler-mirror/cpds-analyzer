@@ -66,7 +66,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 
 // configureLogLevel "debug"|"info"|"warn"|"error"|"fatal", default: "info"
 func configureLogLevel(conf *config.Config) error {
-	logrus.Infof("Configure Log Level: %s", conf.LogLevel)
+	logrus.Infof("configure Log Level: %s", conf.LogLevel)
 	if conf.LogLevel != "" {
 		lvl, err := logrus.ParseLevel(conf.LogLevel)
 		if err != nil {
