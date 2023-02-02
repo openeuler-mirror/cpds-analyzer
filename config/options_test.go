@@ -17,10 +17,12 @@ func TestInstallFlags(t *testing.T) {
 		"--config-path=/foo/config",
 		"--db-address=1.2.3.4",
 		"--port=4321",
+		"--debug",
 	})
 
 	assert.Check(t, err)
 	assert.Check(t, is.Equal("/foo/config", conf.ConfigPath))
 	assert.Check(t, is.Equal("1.2.3.4", conf.DatabaseAddress))
 	assert.Check(t, is.Equal(conf.Port, "4321"))
+	assert.Equal(t, conf.Debug, true)
 }
