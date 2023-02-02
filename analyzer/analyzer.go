@@ -89,7 +89,7 @@ func installAPIs(c *restful.Container) {
 }
 
 func setRestfulConf(c *restful.Container) {
-	logrus.Debug("Setting restful configuration")
+	logrus.Debug("setting restful configuration")
 	// Add cross origin filter
 	cors := config.GetCors(c)
 	c.Filter(cors.Filter)
