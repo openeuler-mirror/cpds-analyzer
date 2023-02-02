@@ -20,8 +20,6 @@ func (c *Config) RegisterSwagger(container *restful.Container) {
 		WebServices:    container.RegisteredWebServices(),
 		WebServicesUrl: fmt.Sprintf("http://%s:%s", c.BindAddress, c.Port),
 		ApiPath:        apiPath,
-
-		// Optionally, specify where the UI is located
 	}
 	swagger.RegisterSwaggerService(config, container)
 }
