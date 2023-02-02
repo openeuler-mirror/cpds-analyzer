@@ -51,6 +51,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 	setRestfulConf(wsContainer)
 	logrus.Debug("set restful conf")
 	conf.RegisterSwagger(wsContainer)
+	logrus.Debug("register swagger")
 
 	tlsconf := config.GetTlsConf()
 	server := &http.Server{
