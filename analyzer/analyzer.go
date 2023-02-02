@@ -40,9 +40,9 @@ func (d *Analyzer) Run(conf *config.Config) error {
 		logrus.Debugf("Enable debug mode")
 	}
 
-	logrus.Infof("Starting cpds-analyzer......")
-	logrus.Infof("Using config: database address: %s, database port: %s", conf.DatabaseAddress, conf.DatabasePort)
-	logrus.Infof("Using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
+	logrus.Infof("starting cpds-analyzer......")
+	logrus.Infof("using config: database address: %s, database port: %s", conf.DatabaseAddress, conf.DatabasePort)
+	logrus.Infof("using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
 
 	wsContainer := restful.NewContainer()
 	installAPIs(wsContainer)
@@ -57,7 +57,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 		ReadTimeout: serverTimeout,
 	}
 	if err := server.ListenAndServeTLS(conf.CertFile, conf.KeyFile); err != nil {
-		logrus.Infof("Failed to listen https://%s:%s: %w", conf.BindAddress, conf.Port, err)
+		logrus.Infof("failed to listen https://%s:%s: %w", conf.BindAddress, conf.Port, err)
 	}
 	defer server.Close()
 
