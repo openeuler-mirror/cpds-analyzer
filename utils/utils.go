@@ -16,3 +16,16 @@ func MergeDuplicateIntArray(slice []int, elems []int) []int {
 	}
 	return result
 }
+
+func DuplicateIntArray(m []int) []int {
+	s := make([]int, 0)
+	smap := make(map[int]int)
+	for _, value := range m {
+		length := len(smap)
+		smap[value] = 1
+		if len(smap) != length {
+			s = append(s, value)
+		}
+	}
+	return s
+}
