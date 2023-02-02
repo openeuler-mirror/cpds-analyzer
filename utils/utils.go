@@ -139,3 +139,9 @@ func ParseSecondTimeToInt64() int64 {
 func ParseHourTimeToInt64() int64 {
 	return time.Now().Unix() / 3600 * 3600
 }
+
+func Catch(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
