@@ -92,3 +92,16 @@ func MergeDuplicateStringArray(slice []string, elems []string) []string {
 	}
 	return result
 }
+
+func DuplicateStringArray(m []string) []string {
+	s := make([]string, 0)
+	smap := make(map[string]string)
+	for _, value := range m {
+		length := len(smap)
+		smap[value] = value
+		if len(smap) != length {
+			s = append(s, value)
+		}
+	}
+	return s
+}
