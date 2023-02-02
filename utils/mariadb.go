@@ -53,6 +53,7 @@ func (m *Mariadb) Connect() error {
 		m.conf.DatabasePort,
 		m.conf.DatabaseName,
 	)
+	logrus.Debugf("connect database with database user: %s", m.conf.DatabaseUser)
 
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,
