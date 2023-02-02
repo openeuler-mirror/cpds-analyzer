@@ -22,6 +22,7 @@ func TestInstallFlags(t *testing.T) {
 		"--db-port=7890",
 		"--db-user=test",
 		"--db-password=password1",
+		"--bind-address=4.3.2.1",
 	})
 
 	assert.Check(t, err)
@@ -33,4 +34,5 @@ func TestInstallFlags(t *testing.T) {
 	assert.Equal(t, conf.DatabasePort, "7890")
 	assert.Equal(t, conf.DatabaseUser, "test")
 	assert.Equal(t, conf.DatabasePassword, "password1")
+	assert.Equal(t, conf.BindAddress, "4.3.2.1")
 }
