@@ -55,6 +55,7 @@ func (m *Mariadb) Connect() error {
 	)
 	logrus.Debugf("connect database with database user: %s", m.conf.DatabaseUser)
 	logrus.Debugf("connect database with database password: %s", m.conf.DatabasePassword)
+	logrus.Debugf("connect database with database address: %s", m.conf.DatabaseAddress)
 
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,
