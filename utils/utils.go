@@ -154,3 +154,9 @@ func ParseCurrentMonday(t time.Time) time.Time {
 	weekStart := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
 	return weekStart
 }
+
+func ParseMorningTime(t time.Time) time.Time {
+	s := t.Format("19931226")
+	result, _ := time.ParseInLocation("19931226", s, time.Local)
+	return result
+}
