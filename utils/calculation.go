@@ -11,7 +11,7 @@ import (
 func GetSum(nums ...float64) (float64, error) {
 	var sum float64
 	if len(nums) == 0 {
-		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+		return math.NaN(), fmt.Errorf("invalid argument: array cannot be empty")
 	}
 
 	for _, v := range nums {
