@@ -32,7 +32,7 @@ func TestLoadConfig(t *testing.T) {
 	flags := pflag.NewFlagSet("testing", pflag.ContinueOnError)
 
 	flags.Parse([]string{
-		"--config-path=config/json/cpds-analyzer.json",
+		"--config=config/json/cpds-analyzer.json",
 	})
 	conf.LoadConfig(flags)
 
