@@ -99,7 +99,7 @@ func GetStandardDeviation(nums ...float64) (float64, error) {
 
 func GetMaxValue(nums ...float64) (float64, error) {
 	if n := len(nums); n == 0 {
-		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+		return math.NaN(), fmt.Errorf("invalid argument: array cannot be empty")
 	}
 
 	max := nums[0]
