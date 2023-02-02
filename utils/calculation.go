@@ -23,12 +23,12 @@ func GetSum(nums ...float64) (float64, error) {
 func GetMean(nums ...float64) (float64, error) {
 	sum, err := GetSum(nums...)
 	if err != nil {
-		return -1, err
+		return math.NaN(), err
 	}
 
 	n := len(nums)
 	if n == 0 {
-		return -1, fmt.Errorf("the divisor cannot be 0")
+		return math.NaN(), fmt.Errorf("the divisor cannot be 0")
 	}
 	return sum / float64(n), nil
 }
