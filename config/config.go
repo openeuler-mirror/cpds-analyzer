@@ -59,7 +59,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			// Config file not found; ignore error, Using defalut config file path
 			// Using defalut config file path
-			logrus.Warnf("Config file '%s' not found, Using defalut config file path: '%s'", c.ConfigPath, defaultConfigPath)
+			logrus.Warnf("config file '%s' not found, using defalut config file path: '%s'", c.ConfigPath, defaultConfigPath)
 		} else {
 
 			// Config file was found but another error was produced
