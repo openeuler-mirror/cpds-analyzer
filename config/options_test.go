@@ -14,7 +14,7 @@ func TestInstallFlags(t *testing.T) {
 	conf.installFlags(flags)
 
 	err := flags.Parse([]string{
-		"--config-path=/foo/config",
+		"--config=/foo/config",
 		"--db-address=1.2.3.4",
 		"--port=4321",
 	})
