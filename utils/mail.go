@@ -29,5 +29,7 @@ func (m *Mail) Send(name, address, subject, message string) error {
 	msg.SetHeader("Subject", subject)
 	msg.SetBody("text/html", message)
 
+	logrus.Infof("send email to %s", address)
+
 	return gomail.Send(m.sendCloser, msg)
 }
