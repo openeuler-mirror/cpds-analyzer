@@ -61,6 +61,7 @@ func (c *Config) LoadConfig(flags *pflag.FlagSet) {
 
 func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 	viper.BindPFlags(flags)
+	logrus.Debug("parse configuration file")
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
