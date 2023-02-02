@@ -75,24 +75,24 @@ func GetVariance(nums ...float64) (float64, error) {
 
 func GetStandardDeviation(nums ...float64) (float64, error) {
 	if len(nums) == 0 {
-		return -1, fmt.Errorf("invalid argument: array cannot be empty")
+		return math.NaN(), fmt.Errorf("invalid argument: array cannot be empty")
 	}
 
 	e := "[variance] ** 0.5"
 	expr, err := govaluate.NewEvaluableExpression(e)
 	if err != nil {
-		return -1, err
+		return math.NaN(), err
 	}
 	parameters := make(map[string]interface{})
 	variance, err := GetVariance(nums...)
 	if err != nil {
-		return -1, err
+		return math.NaN(), err
 	}
 	parameters["variance"] = variance
 
 	result, err := expr.Evaluate(parameters)
 	if err != nil {
-		return -1, err
+		return math.NaN(), err
 	}
 	return result.(float64), nil
 }
