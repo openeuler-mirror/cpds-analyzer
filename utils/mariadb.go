@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -77,6 +78,7 @@ func (m *Mariadb) Connect() error {
 }
 
 func (m *Mariadb) InitDBTables(db *gorm.DB, table interface{}) error {
+	logrus.Infof("initialize database tables")
 	if err := db.AutoMigrate(&table); err != nil {
 		return err
 	}
