@@ -90,6 +90,8 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 		CertFile:         viper.GetString("cert-file"),
 		KeyFile:          viper.GetString("key-file"),
 	}
+
+	logrus.Debugf("parsed debug mod configuration: %s", viper.GetBool("debug"))
 }
 
 func (c *Config) CheckConfig() error {
