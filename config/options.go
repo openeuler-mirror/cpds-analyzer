@@ -19,6 +19,6 @@ func (c *Config) installFlags(flags *pflag.FlagSet) {
 
 	certPath, keyPath := GetCertPath(), GetKeyPath()
 	// TODO: make certificate and key file by openssl instead of using certificate template
-	flags.StringVar(&c.CertFile, "cert-file", certPath, "identify HTTPS client using this SSL certificate file")
+	flags.StringVar(&c.CertFile, "cert-file", certPath, "Identify HTTPS client using this SSL certificate file")
 	flags.StringVar(&c.KeyFile, "key-file", keyPath, "identify HTTPS client using this SSL key file")
 }
