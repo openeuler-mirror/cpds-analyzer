@@ -175,3 +175,12 @@ func ParseYesterdayTime(t ...time.Time) time.Time {
 		return t[0].AddDate(0, 0, -1)
 	}
 }
+
+func ParseTimeToTimeStr(intTime int64, strfmt ...string) string {
+	t := time.Unix(intTime/1e3, 0)
+	defaultFmt := "2006-01-02 15:04:05"
+	if len(strfmt) > 0 {
+		defaultFmt = strfmt[0]
+	}
+	return t.Format(defaultFmt)
+}
