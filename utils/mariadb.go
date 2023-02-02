@@ -28,6 +28,7 @@ const (
 )
 
 func NewDB(dbAddr string, dbPort int, dbUser string, dbPasswd string) *Mariadb {
+	logrus.Debugf("Database Address: %s", dbAddr)
 	c := &Config{
 		DatabaseAddress:  dbAddr,
 		DatabasePort:     strconv.Itoa(dbPort),
