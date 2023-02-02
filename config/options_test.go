@@ -24,6 +24,7 @@ func TestInstallFlags(t *testing.T) {
 		"--db-password=password1",
 		"--bind-address=4.3.2.1",
 		"--cert-file=/path/test",
+		"--key-file=/test/path",
 	})
 
 	assert.Check(t, err)
@@ -37,4 +38,5 @@ func TestInstallFlags(t *testing.T) {
 	assert.Equal(t, conf.DatabasePassword, "password1")
 	assert.Equal(t, conf.BindAddress, "4.3.2.1")
 	assert.Equal(t, conf.CertFile, "/path/test")
+	assert.Equal(t, conf.KeyFile, "/test/path")
 }
