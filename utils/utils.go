@@ -63,3 +63,19 @@ func ExistStringArray(s []string, e string) bool {
 	}
 	return false
 }
+
+func GetDifferentStringArray(sourceList, sourceList2 []string) (result []string) {
+	for _, src := range sourceList {
+		var find bool
+		for _, target := range sourceList2 {
+			if src == target {
+				find = true
+				continue
+			}
+		}
+		if !find {
+			result = append(result, src)
+		}
+	}
+	return
+}
