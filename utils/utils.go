@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"strconv"
 	"strings"
 	"time"
 
@@ -211,4 +212,9 @@ func FormatTime(time time.Time, layout string) string {
 
 func ParseTime(timeStr, layout string) (time.Time, error) {
 	return time.Parse(layout, timeStr)
+}
+
+func GetDay(time time.Time) int {
+	ret, _ := strconv.Atoi(time.Format("20060102"))
+	return ret
 }
