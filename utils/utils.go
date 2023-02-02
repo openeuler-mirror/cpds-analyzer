@@ -79,3 +79,16 @@ func GetDifferentStringArray(sourceList, sourceList2 []string) (result []string)
 	}
 	return
 }
+
+func MergeDuplicateStringArray(slice []string, elems []string) []string {
+	listPId := append(slice, elems...)
+	t := mapset.NewSet()
+	for _, i := range listPId {
+		t.Add(i)
+	}
+	var result []string
+	for i := range t.Iterator().C {
+		result = append(result, i.(string))
+	}
+	return result
+}
