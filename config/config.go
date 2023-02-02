@@ -37,6 +37,7 @@ func New() *Config {
 }
 
 func (c *Config) LoadConfig(flags *pflag.FlagSet) {
+	logrus.Debug("loading cpds-detector configuration")
 	cobra.OnInitialize(func() {
 		viper.SetConfigType(defaultConfigType)
 		viper.SetConfigName(defaultConfigName)
