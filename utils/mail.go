@@ -11,6 +11,7 @@ type Mail struct {
 
 func NewMailSender(host string, port int, userName string, password string) (*Mail, error) {
 	logrus.Debug("create new mail sender")
+	logrus.Debugf("create new mail sender with host: %s", host)
 	d := gomail.NewDialer(host, port, userName, password)
 	s, err := d.Dial()
 	if err != nil {
