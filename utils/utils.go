@@ -196,3 +196,7 @@ func FromUnix(unix int64) time.Time {
 func Timestamp(t time.Time) int64 {
 	return t.UnixNano() / 1e6
 }
+
+func NowTimestamp() int64 {
+	return Timestamp(time.Now())
+}
