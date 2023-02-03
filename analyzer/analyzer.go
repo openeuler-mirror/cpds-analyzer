@@ -49,6 +49,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 	installAPIs(wsContainer)
 	logrus.Debug("install apis")
 	setRestfulConf(wsContainer)
+	logrus.Debug("set restful conf")
 	conf.RegisterSwagger(wsContainer)
 
 	tlsconf := config.GetTlsConf()
