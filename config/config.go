@@ -37,8 +37,10 @@ func New() *Config {
 }
 
 func (c *Config) LoadConfig(flags *pflag.FlagSet) {
+	logrus.Debug("loading cpds-detector configuration")
 	cobra.OnInitialize(func() {
 		viper.SetConfigType(defaultConfigType)
+		logrus.Debugf("set configuration file type: %s", defaultConfigType)
 		viper.SetConfigName(defaultConfigName)
 		if c.ConfigPath != defaultConfigPath {
 			// Use config file from the flag.
