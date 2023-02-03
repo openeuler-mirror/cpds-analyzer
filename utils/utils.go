@@ -145,3 +145,12 @@ func Catch(err error) {
 		panic(err)
 	}
 }
+
+func ParseCurrentMonday(t time.Time) time.Time {
+	offset := int(time.Monday - t.Weekday())
+	if offset > 0 {
+		offset = -6
+	}
+	weekStart := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
+	return weekStart
+}
