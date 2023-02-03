@@ -167,3 +167,11 @@ func ParseFirstDayOfMonthMorning(t time.Time) time.Time {
 	}
 	return time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
 }
+
+func ParseYesterdayTime(t ...time.Time) time.Time {
+	if len(t) == 0 {
+		return time.Now().AddDate(0, 0, -1)
+	} else {
+		return t[0].AddDate(0, 0, -1)
+	}
+}
