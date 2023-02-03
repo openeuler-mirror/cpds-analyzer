@@ -43,4 +43,5 @@ func TestLoadConfig(t *testing.T) {
 	assert.Equal(t, conf.DatabaseAddress, "localhost")
 	assert.Equal(t, conf.DatabasePort, "3306")
 	assert.Equal(t, conf.DatabaseUser, "root")
+	assert.Equal(t, conf.DatabasePassword, "root")
 }
