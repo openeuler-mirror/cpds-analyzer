@@ -45,6 +45,7 @@ func (d *Analyzer) Run(conf *config.Config) error {
 	logrus.Infof("using config: bind address: %s, listening port: %s", conf.BindAddress, conf.Port)
 
 	wsContainer := restful.NewContainer()
+	logrus.Debug("creating new container")
 	installAPIs(wsContainer)
 	setRestfulConf(wsContainer)
 	conf.RegisterSwagger(wsContainer)
