@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -241,4 +242,10 @@ func RandomString(length int) string {
 		result = append(result, bytes[r.Intn(len(bytes))])
 	}
 	return string(result)
+}
+
+func Md5Byte(s []byte) string {
+	h := md5.New()
+	h.Write(s)
+	return hex.EncodeToString(h.Sum(nil))
 }
