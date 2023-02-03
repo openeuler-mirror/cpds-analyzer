@@ -41,4 +41,5 @@ func TestLoadConfig(t *testing.T) {
 	assert.Equal(t, conf.Debug, false)
 	assert.Equal(t, conf.LogLevel, "info")
 	assert.Equal(t, conf.DatabaseAddress, "localhost")
+	assert.Equal(t, conf.DatabasePort, "3306")
 }
