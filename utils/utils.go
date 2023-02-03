@@ -135,3 +135,7 @@ func ParseTimeToInt64(t ...time.Time) int64 {
 func ParseSecondTimeToInt64() int64 {
 	return time.Now().Unix()
 }
+
+func ParseHourTimeToInt64() int64 {
+	return time.Now().Unix() / 3600 * 3600
+}
