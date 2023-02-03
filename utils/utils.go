@@ -123,3 +123,11 @@ func ParseTimeByTimeStr(str, errPrefix string) (time.Time, error) {
 
 	return t, nil
 }
+
+func ParseTimeToInt64(t ...time.Time) int64 {
+	if len(t) == 0 {
+		return time.Now().UnixNano() / 1e6
+	} else {
+		return t[0].UnixNano() / 1e6
+	}
+}
