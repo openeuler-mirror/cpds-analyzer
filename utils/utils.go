@@ -204,3 +204,7 @@ func NowTimestamp() int64 {
 func FromTimestamp(timestamp int64) time.Time {
 	return time.Unix(0, timestamp*int64(time.Millisecond))
 }
+
+func FormatTime(time time.Time, layout string) string {
+	return time.Format(layout)
+}
