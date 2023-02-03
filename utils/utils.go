@@ -160,3 +160,10 @@ func ParseMorningTime(t time.Time) time.Time {
 	result, _ := time.ParseInLocation("19931226", s, time.Local)
 	return result
 }
+
+func ParseFirstDayOfMonthMorning(t time.Time) time.Time {
+	if t.IsZero() {
+		return t
+	}
+	return time.Date(t.Year(), t.Month(), 1, 0, 0, 0, 0, t.Location())
+}
