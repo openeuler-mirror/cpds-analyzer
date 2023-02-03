@@ -218,3 +218,7 @@ func GetDay(time time.Time) int {
 	ret, _ := strconv.Atoi(time.Format("20060102"))
 	return ret
 }
+
+func TrimRightSpace(s string) string {
+	return strings.TrimRight(string(s), "\r\n\t ")
+}
