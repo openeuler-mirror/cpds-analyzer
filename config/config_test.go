@@ -39,4 +39,5 @@ func TestLoadConfig(t *testing.T) {
 	assert.Check(t, is.Equal(conf.DatabaseUser, "root"))
 	assert.Check(t, is.Equal(conf.Port, "19081"))
 	assert.Equal(t, conf.Debug, false)
+	assert.Equal(t, conf.LogLevel, "info")
 }
