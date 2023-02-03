@@ -92,6 +92,7 @@ func (c *Config) parseConfigFile(flags *pflag.FlagSet) {
 	}
 
 	logrus.Debugf("parsed debug mod configuration: %s", viper.GetBool("debug"))
+	logrus.Debugf("parsed log-level configuration: %s", viper.GetString("log-level"))
 }
 
 func (c *Config) CheckConfig() error {
