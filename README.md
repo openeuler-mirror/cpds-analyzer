@@ -13,8 +13,8 @@ cpds-analyzer是为CPDS(Container Problem Detect System)容器故障检测系统
 `cpds-analyzer`只支持 Linux，必须使用 Go 版本 1.18 或更高版本构建。
 
 ```bash
-# create a 'gitee.com/cpds' in your GOPATH/src
-cd $GOPATH/gitee.com/cpds
+# create a 'cpds' directory in your GOPATH/src
+cd $GOPATH/cpds/
 git clone https://gitee.com/openeuler/cpds-analyzer.git
 cd cpds-analyzer
 

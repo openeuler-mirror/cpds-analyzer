@@ -14,8 +14,8 @@ This component processes the abnormal data collected by cpds-detector (anomaly d
 `cpds-analyzer` is only supported on Linux and must be built with Go version 1.18 or higher.
 
 ```bash
-# create a 'gitee.com/cpds' in your GOPATH/src
-cd $GOPATH/gitee.com/cpds
+# create a 'cpds' directory in your GOPATH/src
+cd $GOPATH/cpds/
 git clone https://gitee.com/openeuler/cpds-analyzer.git
 cd cpds-analyzer
 
