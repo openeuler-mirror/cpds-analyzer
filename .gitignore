@@ -1,2 +1,8 @@
 # Binaries directory for programs
 out
+
+# Temporary log and resource storage directory
+storage
+
+# Configuration file for test
+config.yml

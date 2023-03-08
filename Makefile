@@ -1,18 +1,30 @@
 PROJECT="cpds-analyzer"
-OUT=./out/$(PROJECT)
+OUTPUT_DIR=./out
 
-BUILD_LDFLAGS := "-s -w"
+# Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
+ifeq (,$(shell go env GOBIN))
+GOBIN=$(shell go env GOPATH)/bin
+else
+GOBIN=$(shell go env GOBIN)
+endif
 
-.PHONY: all
-all: clean build
+ifeq (${GOFLAGS},)
+	# go build with vendor by default.
+	export GOFLAGS=-mod=vendor
+endif
 
-.PHONY: build
-build: 
+.PHONY:  all cpds-analyzer clean help
+default: all
+all: cpds-analyzer
+
+cpds-analyzer: 
 	@echo "Building $(PROJECT)"
-	@go build -ldflags=$(BUILD_LDFLAGS) -o $(OUT) ./cmd/$(PROJECT)/main.go
+	@go build -ldflags=$(BUILD_LDFLAGS) -o $(OUTPUT_DIR)/$(PROJECT) ./cmd/$(PROJECT)/main.go
 
 clean:
-	@echo "clean"
-	@rm -rf ./out
+	@rm -rf $(OUTPUT_DIR)
 
-default: build
+help:
+	@echo "make help: get help"
+	@echo "make cpds-analyzer: compile cpds-analyzer binaries"
+	@echo "make clean: clean up binaries"
