@@ -6,3 +6,5 @@ storage
 
 # Configuration file for test
 config.yml
+
+.vscode
