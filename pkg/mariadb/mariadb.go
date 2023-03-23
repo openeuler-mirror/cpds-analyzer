@@ -36,7 +36,6 @@ func (d *MariaDB) Connect() (*gorm.DB, error) {
 		SkipInitializeWithVersion: false,
 	}), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   "cpds",
 			SingularTable: true,
 		},
 		DisableForeignKeyConstraintWhenMigrating: true,
@@ -56,8 +55,6 @@ func (d *MariaDB) Connect() (*gorm.DB, error) {
 	sqlDB.SetMaxOpenConns(d.MaxOpenConn)
 	sqlDB.SetMaxIdleConns(d.MaxIdleConn)
 	sqlDB.SetConnMaxLifetime(d.MaxLifetime)
-
-	// db.Use(&TracePlugin{})
 
 	return db, nil
 }

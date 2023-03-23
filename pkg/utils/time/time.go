@@ -64,3 +64,14 @@ func ParseDuration(input string) (time.Duration, error) {
 
 	return time.Duration(number) * unit, nil
 }
+
+func IsTimestamp(timestamp int64) bool {
+	min := time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC).Unix()
+	max := time.Date(2038, 1, 19, 3, 14, 7, 0, time.UTC).Unix()
+
+	if timestamp >= min && timestamp <= max {
+		return true
+	}
+
+	return false
+}

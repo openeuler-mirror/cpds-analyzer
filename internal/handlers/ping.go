@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"cpds/cpds-analyzer/internal/model"
+	"cpds/cpds-analyzer/internal/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetPing(c *gin.Context) {
-	r := model.GetPingResult()
+	r := models.GetPingResult()
 	c.JSON(http.StatusOK, r)
 }
