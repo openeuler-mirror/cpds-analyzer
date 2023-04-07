@@ -9,7 +9,7 @@ import (
 func setRulesRouter(api *gin.RouterGroup, r *resource) {
 	rulesApi := api.Group("rules")
 	{
-		rulesHandler := rulesHandler.New(r.logger, r.db)
+		rulesHandler := rulesHandler.New(r.config, r.logger, r.db)
 		rulesApi.GET("", rulesHandler.Get())
 		rulesApi.POST("/create", rulesHandler.Create())
 		rulesApi.POST("/delete", rulesHandler.Delete())

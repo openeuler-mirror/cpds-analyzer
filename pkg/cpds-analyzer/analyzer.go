@@ -64,7 +64,7 @@ func (s *Analyzer) PrepareRun() error {
 }
 
 func (s *Analyzer) Run() error {
-	r := router.InitRouter(s.Debug, s.Logger, s.DB)
+	r := router.InitRouter(s.Debug, s.Config, s.Logger, s.DB)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.Config.GenericOptions.Port),

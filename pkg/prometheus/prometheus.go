@@ -20,7 +20,7 @@ type prometheus struct {
 
 func NewPrometheus(host string, port int) (prometheus, error) {
 	cfg := api.Config{
-		Address: fmt.Sprintf("%s/%d", host, port),
+		Address: fmt.Sprintf("http://%s:%d", host, port),
 	}
 
 	client, err := api.NewClient(cfg)
@@ -58,17 +58,17 @@ func (p prometheus) GetSingleMetricOverTime(expr string, start, end time.Time, s
 	return parsedResp
 }
 
-func (p prometheus) GetMultiMetrics(metrics []string, ts time.Time) []Metric {
+func (p prometheus) GetMultiMetrics(metrics map[string]string, ts time.Time) []Metric {
 	var res []Metric
 	var mtx sync.Mutex
 	var wg sync.WaitGroup
 
-	for _, metric := range metrics {
+	for name, expr := range metrics {
 		wg.Add(1)
-		go func(metric string) {
-			parsedResp := Metric{MetricName: metric}
+		go func(name, expr string) {
+			parsedResp := Metric{MetricName: name}
 
-			value, _, err := p.client.Query(context.Background(), metric, ts)
+			value, _, err := p.client.Query(context.Background(), expr, ts)
 			if err != nil {
 				parsedResp.Error = err.Error()
 			} else {
@@ -80,7 +80,7 @@ func (p prometheus) GetMultiMetrics(metrics []string, ts time.Time) []Metric {
 			mtx.Unlock()
 
 			wg.Done()
-		}(metric)
+		}(name, expr)
 	}
 
 	wg.Wait()
@@ -88,7 +88,7 @@ func (p prometheus) GetMultiMetrics(metrics []string, ts time.Time) []Metric {
 	return res
 }
 
-func (p prometheus) GetMultiMetricsOverTime(metrics []string, start, end time.Time, step time.Duration) []Metric {
+func (p prometheus) GetMultiMetricsOverTime(metrics map[string]string, start, end time.Time, step time.Duration) []Metric {
 	var res []Metric
 	var mtx sync.Mutex
 	var wg sync.WaitGroup
@@ -99,12 +99,12 @@ func (p prometheus) GetMultiMetricsOverTime(metrics []string, start, end time.Ti
 		Step:  step,
 	}
 
-	for _, metric := range metrics {
+	for name, expr := range metrics {
 		wg.Add(1)
-		go func(metric string) {
-			parsedResp := Metric{MetricName: metric}
+		go func(name, expr string) {
+			parsedResp := Metric{MetricName: name}
 
-			value, _, err := p.client.QueryRange(context.Background(), metric, timeRange)
+			value, _, err := p.client.QueryRange(context.Background(), expr, timeRange)
 			if err != nil {
 				parsedResp.Error = err.Error()
 			} else {
@@ -116,7 +116,7 @@ func (p prometheus) GetMultiMetricsOverTime(metrics []string, start, end time.Ti
 			mtx.Unlock()
 
 			wg.Done()
-		}(metric)
+		}(name, expr)
 	}
 
 	wg.Wait()

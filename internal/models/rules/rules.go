@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"cpds/cpds-analyzer/internal/pkg/detector"
 	"errors"
 	"fmt"
 	"time"
@@ -15,18 +16,30 @@ type Operator interface {
 
 	UpdateRule(rule *Rule) error
 
+	SendRuleUpdatedRequset() error
+
 	DeleteRuleByID(id int) error
 
 	GetTotalPages(pageSize int) int
 }
 
 type operator struct {
-	db *gorm.DB
+	detectorConfig *detectorConfig
+	db             *gorm.DB
 }
 
-func NewOperator(db *gorm.DB) Operator {
+type detectorConfig struct {
+	host string
+	port int
+}
+
+func NewOperator(detectorHost string, detectorPort int, db *gorm.DB) Operator {
 	return &operator{
 		db: db.Session(&gorm.Session{}),
+		detectorConfig: &detectorConfig{
+			host: detectorHost,
+			port: detectorPort,
+		},
 	}
 }
 
@@ -80,6 +93,14 @@ func (o *operator) DeleteRuleByID(id int) error {
 
 	if result.RowsAffected == 0 {
 		return gorm.ErrRecordNotFound
+	}
+
+	return nil
+}
+
+func (o *operator) SendRuleUpdatedRequset() error {
+	if err := detector.SendRuleUpdatedRequset(o.detectorConfig.host, o.detectorConfig.port); err != nil {
+		return err
 	}
 
 	return nil
