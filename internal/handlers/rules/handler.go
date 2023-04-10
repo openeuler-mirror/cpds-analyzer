@@ -4,6 +4,7 @@ import (
 	"cpds/cpds-analyzer/internal/models/rules"
 	cpdserr "cpds/cpds-analyzer/internal/pkg/errors"
 	"cpds/cpds-analyzer/internal/pkg/response"
+	"cpds/cpds-analyzer/pkg/cpds-analyzer/config"
 	prometheusutil "cpds/cpds-analyzer/pkg/utils/prometheus"
 	stringutil "cpds/cpds-analyzer/pkg/utils/string"
 	timeutil "cpds/cpds-analyzer/pkg/utils/time"
@@ -30,14 +31,15 @@ type Handler interface {
 }
 
 type handler struct {
+	config   *config.Config
 	logger   *zap.Logger
 	operator rules.Operator
 }
 
-func New(logger *zap.Logger, db *gorm.DB) Handler {
+func New(config *config.Config, logger *zap.Logger, db *gorm.DB) Handler {
 	return &handler{
 		logger:   logger,
-		operator: rules.NewOperator(db),
+		operator: rules.NewOperator(config.DetectorOptions.Host, config.DetectorOptions.Port, db),
 	}
 }
 
@@ -82,6 +84,15 @@ func (h *handler) Create() gin.HandlerFunc {
 			return
 		}
 
+		if err := h.operator.SendRuleUpdatedRequset(); err != nil {
+			response.HandleError(
+				ctx,
+				http.StatusInternalServerError,
+				cpdserr.NewError(cpdserr.DETECTOR_ERROR, fmt.Errorf("create rule success but unable to start analysis: %s", err)),
+			)
+			return
+		}
+
 		response.HandleOK(ctx, nil)
 	}
 }
@@ -104,8 +115,16 @@ func (h *handler) Update() gin.HandlerFunc {
 			return
 		}
 
-		response.HandleOK(ctx, nil)
+		if err := h.operator.SendRuleUpdatedRequset(); err != nil {
+			response.HandleError(
+				ctx,
+				http.StatusInternalServerError,
+				cpdserr.NewError(cpdserr.DETECTOR_ERROR, fmt.Errorf("update rule success but unable to start analysis: %s", err)),
+			)
+			return
+		}
 
+		response.HandleOK(ctx, nil)
 	}
 }
 
@@ -119,6 +138,15 @@ func (h *handler) Delete() gin.HandlerFunc {
 
 		if err := h.operator.DeleteRuleByID(req.ID); err != nil {
 			response.HandleError(ctx, http.StatusInternalServerError, cpdserr.NewError(cpdserr.RULES_DELETE_ERROR, err))
+			return
+		}
+
+		if err := h.operator.SendRuleUpdatedRequset(); err != nil {
+			response.HandleError(
+				ctx,
+				http.StatusInternalServerError,
+				cpdserr.NewError(cpdserr.DETECTOR_ERROR, fmt.Errorf("delete rule success but unable to stop analysis: %s", err)),
+			)
 			return
 		}
 

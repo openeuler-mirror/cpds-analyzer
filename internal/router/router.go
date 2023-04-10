@@ -4,6 +4,7 @@ import (
 	"cpds/cpds-analyzer/internal/handlers"
 	"cpds/cpds-analyzer/internal/middlewares"
 	dbinitiator "cpds/cpds-analyzer/internal/pkg/database"
+	"cpds/cpds-analyzer/pkg/cpds-analyzer/config"
 
 	gormlogger "gorm.io/gorm/logger"
 
@@ -13,12 +14,14 @@ import (
 )
 
 type resource struct {
+	config *config.Config
 	logger *zap.Logger
 	db     *gorm.DB
 }
 
-func InitRouter(debug bool, logger *zap.Logger, db *gorm.DB) *gin.Engine {
+func InitRouter(debug bool, config *config.Config, logger *zap.Logger, db *gorm.DB) *gin.Engine {
 	r := &resource{
+		config: config,
 		logger: logger,
 		db:     db,
 	}
@@ -38,6 +41,7 @@ func InitRouter(debug bool, logger *zap.Logger, db *gorm.DB) *gin.Engine {
 
 	apiv1 := router.Group("/api/v1")
 	setRulesRouter(apiv1, r)
+	setAnalysisRouter(apiv1, r)
 	initDatabaseTable(db)
 
 	return router
