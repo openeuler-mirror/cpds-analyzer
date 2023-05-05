@@ -40,9 +40,13 @@ func InitRouter(debug bool, config *config.Config, logger *zap.Logger, db *gorm.
 	router.GET("/ping", handlers.GetPing)
 
 	apiv1 := router.Group("/api/v1")
-	setRulesRouter(apiv1, r)
-	setAnalysisRouter(apiv1, r)
-	setMonitorRouter(apiv1, r)
+	{
+		setRulesRouter(apiv1, r)
+		setAnalysisRouter(apiv1, r)
+		setMonitorRouter(apiv1, r)
+		setPrometheusRouter(apiv1, r)
+	}
+
 	initDatabaseTable(db)
 
 	return router

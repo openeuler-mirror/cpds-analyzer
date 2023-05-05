@@ -24,6 +24,10 @@ const (
 	MONITOR_GET_CLUSTER_RESOURCES_ERROR        = 3005
 	MONITOR_GET_CLUSTER_CONTAINER_STATUS_ERROR = 3006
 	MONITOR_GET_TARGET_ERROR                   = 3007
+
+	PROMETHEUS_QUERY_ERROR          = 4001
+	PROMETHEUS_QUERY_RANGE_ERROR    = 4002
+	PROMETHEUS_QUERY_VALIDATE_ERROR = 4003
 )
 
 var AnalyzerResultCodeMap = map[uint16]string{
@@ -39,6 +43,19 @@ var AnalyzerResultCodeMap = map[uint16]string{
 
 	ANALYSIS_GET_RESULT_ERROR:    "Failed to get analysis result",
 	ANALYSIS_DELETE_RESULT_ERROR: "Failed to delete analysis result",
+	ANALYSIS_GET_RAW_DATA_ERROR:  "Failed to get raw data",
+
+	MONITOR_GET_NODE_STATUS_ERROR:              "Failed to get node state",
+	MONITOR_GET_NODE_INFO_ERROR:                "Fauled to get node info monitor data",
+	MONITOR_GET_NODE_RESOURCES_ERROR:           "Failed to get node resources monitor data",
+	MONITOR_GET_NODE_CONTAINER_STATUS_ERROR:    "Failed to get node container status",
+	MONITOR_GET_CLUSTER_RESOURCES_ERROR:        "Failed to get cluster resources monitor data",
+	MONITOR_GET_CLUSTER_CONTAINER_STATUS_ERROR: "Failed to get cluster container status",
+	MONITOR_GET_TARGET_ERROR:                   "Failed to get monitor target",
+
+	PROMETHEUS_QUERY_ERROR:          "Failed to query prometheus",
+	PROMETHEUS_QUERY_RANGE_ERROR:    "Failed to query range prometheus",
+	PROMETHEUS_QUERY_VALIDATE_ERROR: "Failed to validate query expression",
 }
 
 type Error struct {
