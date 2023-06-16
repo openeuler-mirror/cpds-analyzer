@@ -52,7 +52,7 @@ func (h *handler) GetResult() gin.HandlerFunc {
 			Records:   records,
 			PageNo:    opt.pageNo,
 			PageSize:  opt.pageSize,
-			PageTotal: h.operator.GetTotalPages(opt.pageSize),
+			PageTotal: h.operator.GetTotalPages(opt.filter),
 		}
 		response.HandleOK(ctx, responseData)
 	}
