@@ -20,7 +20,7 @@ type Operator interface {
 
 	DeleteRuleByID(id int) error
 
-	GetTotalPages(pageSize int) int
+	GetTotalPages(filter string) int
 }
 
 type operator struct {
@@ -106,13 +106,9 @@ func (o *operator) SendRuleUpdatedRequset() error {
 	return nil
 }
 
-func (o *operator) GetTotalPages(pageSize int) int {
+func (o *operator) GetTotalPages(filter string) int {
 	var tableCount int64
-	o.db.Count(&tableCount)
-
-	pageCount := tableCount / int64(pageSize)
-	if tableCount%int64(pageSize) != 0 && tableCount == 0 {
-		pageCount++
-	}
-	return int(pageCount)
+	var query = o.db
+	query = query.Model(&Rule{}).Where("name LIKE ?", "%"+filter+"%").Count(&tableCount)
+	return int(tableCount)
 }
