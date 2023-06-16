@@ -154,7 +154,7 @@ func (o *operator) GetNodeStatus(instance string) ([]NodeStatus, error) {
 
 func (o *operator) GetNodeResources(instance string, startTime time.Time, endTime time.Time, step int64) ([]prometheus.Metric, error) {
 	url := fmt.Sprintf(
-		"http://%s:%d/api/v1/monitor/node_resoureces?instance=%s&start_time=%s&end_time=%s&step=%d",
+		"http://%s:%d/api/v1/monitor/node_resources?instance=%s&start_time=%s&end_time=%s&step=%d",
 		o.detectorConfig.host,
 		o.detectorConfig.port,
 		instance,
