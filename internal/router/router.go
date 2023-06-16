@@ -34,7 +34,7 @@ func InitRouter(debug bool, config *config.Config, logger *zap.Logger, db *gorm.
 	}
 
 	router := gin.Default()
-	router.Use(middlewares.LoggerMiddleware(logger))
+	router.Use(middlewares.Cors(),middlewares.LoggerMiddleware(logger))
 
 	// test route
 	router.GET("/ping", handlers.GetPing)
