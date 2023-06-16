@@ -19,7 +19,7 @@ type Operator interface {
 
 	GetRawData(ID uint) (*prometheus.Metric, error)
 
-	GetTotalPages(pageSize int) int
+	GetTotalPages(filter string) int
 }
 
 type operator struct {
@@ -116,13 +116,9 @@ func (o *operator) GetRawData(analysisID uint) (*prometheus.Metric, error) {
 	return data.Data, err
 }
 
-func (o *operator) GetTotalPages(pageSize int) int {
+func (o *operator) GetTotalPages(filter string) int {
 	var tableCount int64
-	o.db.Model(&Analysis{}).Count(&tableCount)
-
-	pageCount := tableCount / int64(pageSize)
-	if tableCount%int64(pageSize) != 0 && tableCount != 0 {
-		pageCount++
-	}
-	return int(pageCount)
+	var query = o.db
+	query = query.Model(&Analysis{}).Where("rule_name LIKE ?", "%"+filter+"%").Count(&tableCount)
+	return int(tableCount)
 }
