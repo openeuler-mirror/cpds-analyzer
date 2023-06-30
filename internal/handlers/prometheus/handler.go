@@ -111,7 +111,7 @@ func parseQueryParams(ctx *gin.Context) (*queryParams, error) {
 }
 
 func parseQueryRangeParams(ctx *gin.Context) (*queryRangeParams, error) {
-	query := ctx.Query("query")
+	query := ctx.Request.URL.Query().Get("query")
 	if query == "" {
 		return nil, errors.New("query cannot be empty")
 	}
