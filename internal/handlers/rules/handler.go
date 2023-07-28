@@ -176,7 +176,7 @@ func parseGetParams(p *gin.Context) (*getOptions, error) {
 
 func validateRule(rule *rules.Rule) error {
 	// check name
-	re := regexp.MustCompile("^[A-Za-z0-9_]{1,20}$")
+	re := regexp.MustCompile("^[A-Za-z0-9_]{1,40}$")
 	if !re.MatchString(rule.Name) {
 		return errors.New("invalid rule name")
 	}
