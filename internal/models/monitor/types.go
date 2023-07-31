@@ -24,6 +24,7 @@ type NodeStatus struct {
 		Usage     float64 `json:"usage"`
 		UsedCore  float64 `json:"used_core"`
 		TotalCore float64 `json:"total_core"`
+		NumberCores float64 `json:"number_cores"`
 	} `json:"cpu"`
 	Memory struct {
 		Usage      float64 `json:"usage"`
