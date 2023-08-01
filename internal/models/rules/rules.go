@@ -2,6 +2,7 @@ package rules
 
 import (
 	"cpds/cpds-analyzer/internal/pkg/detector"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -74,7 +75,10 @@ func (o *operator) CreateRule(rule *Rule) error {
 }
 
 func (o *operator) UpdateRule(rule *Rule) error {
-	result := o.db.Model(&rule).Updates(rule)
+	b,_ :=json.Marshal(rule)
+	ruleMap :=make(map[string]interface{})
+	json.Unmarshal(b, &ruleMap)
+	result := o.db.Model(&rule).Updates(ruleMap)
 	if result.Error != nil {
 		return result.Error
 	} else if result.RowsAffected == 0 {
