@@ -68,12 +68,28 @@ func (h *handler) Get() gin.HandlerFunc {
 
 func (h *handler) Create() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var req createRequest
-		if err := ctx.ShouldBindJSON(&req); err != nil {
+		var getRule ruleRequest
+		if err := ctx.ShouldBindJSON(&getRule); err != nil {
 			response.HandleError(ctx, http.StatusInternalServerError, cpdserr.NewError(cpdserr.RULES_CREATE_ERROR, err))
 			return
 		}
-
+		var SubhealthThresholds,_ = strconv.ParseFloat(getRule.Rules.SubhealthThresholds,64)
+		var FaultThresholds,_ = strconv.ParseFloat(getRule.Rules.FaultThresholds,64)
+		req := &createRequest{
+			&rules.Rule{
+				ID: getRule.ID,
+				Name: getRule.Rules.Name,
+				CreateTime: getRule.Rules.CreateTime,
+				UpdateTime: getRule.Rules.UpdateTime,
+				Duration: getRule.Rules.Duration,
+				Expression: getRule.Rules.Expression,
+				SubhealthConditionType: getRule.Rules.SubhealthConditionType,
+				SubhealthThresholds: SubhealthThresholds,
+				FaultConditionType: getRule.Rules.FaultConditionType,
+				FaultThresholds: FaultThresholds,
+				Severity: getRule.Rules.Severity,
+			},
+		}
 		if err := validateRule(req.Rule); err != nil {
 			response.HandleError(ctx, http.StatusInternalServerError, cpdserr.NewError(cpdserr.RULES_CREATE_ERROR, err))
 			return
@@ -99,10 +115,27 @@ func (h *handler) Create() gin.HandlerFunc {
 
 func (h *handler) Update() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var req updateRequest
-		if err := ctx.ShouldBindJSON(&req); err != nil {
+		var getRule ruleRequest
+		if err := ctx.ShouldBindJSON(&getRule); err != nil {
 			response.HandleError(ctx, http.StatusInternalServerError, cpdserr.NewError(cpdserr.RULES_UPDATE_ERROR, err))
 			return
+		}
+		var SubhealthThresholds,_ = strconv.ParseFloat(getRule.Rules.SubhealthThresholds,64)
+		var FaultThresholds,_ = strconv.ParseFloat(getRule.Rules.FaultThresholds,64)
+		req := &updateRequest{
+			&rules.Rule{
+				ID: getRule.ID,
+				Name: getRule.Rules.Name,
+				CreateTime: getRule.Rules.CreateTime,
+				UpdateTime: getRule.Rules.UpdateTime,
+				Duration: getRule.Rules.Duration,
+				Expression: getRule.Rules.Expression,
+				SubhealthConditionType: getRule.Rules.SubhealthConditionType,
+				SubhealthThresholds: SubhealthThresholds,
+				FaultConditionType: getRule.Rules.FaultConditionType,
+				FaultThresholds: FaultThresholds,
+				Severity: getRule.Rules.Severity,
+			},
 		}
 
 		if err := validateRule(req.Rule); err != nil {
