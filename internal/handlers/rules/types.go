@@ -11,7 +11,7 @@ type getOptions struct {
 }
 
 type getResponse struct {
-	Records   []rules.Rule `json:"records"`
+	Records   []rules.Rules `json:"records"`
 	PageTotal int          `json:"page_total"`
 	PageNo    int          `json:"page_no"`
 	PageSize  int          `json:"page_size"`
@@ -23,6 +23,10 @@ type createRequest struct {
 
 type updateRequest struct {
 	*rules.Rule
+}
+
+type ruleRequest struct {
+	*rules.Rules
 }
 
 type deleteRequest struct {

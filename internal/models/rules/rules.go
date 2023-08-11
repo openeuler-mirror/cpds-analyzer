@@ -5,13 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"gorm.io/gorm"
 )
 
 type Operator interface {
-	GetRules(filter, sortField, sortOrder string, pageNo, pageSize int) ([]Rule, error)
+	GetRules(filter, sortField, sortOrder string, pageNo, pageSize int) ([]Rules, error)
 
 	CreateRule(rule *Rule) error
 
@@ -44,7 +45,7 @@ func NewOperator(detectorHost string, detectorPort int, db *gorm.DB) Operator {
 	}
 }
 
-func (o *operator) GetRules(filter, sortField, sortOrder string, pageNo, pageSize int) ([]Rule, error) {
+func (o *operator) GetRules(filter, sortField, sortOrder string, pageNo, pageSize int) ([]Rules, error) {
 	var query = o.db
 	if filter != "" {
 		query = query.Where("name LIKE ?", "%"+filter+"%")
@@ -60,7 +61,23 @@ func (o *operator) GetRules(filter, sortField, sortOrder string, pageNo, pageSiz
 	if err != nil {
 		return nil, err
 	}
-	return rules, nil
+	var ruleData []Rules
+	for _, rule := range rules{
+		ruleData = append(ruleData, Rules{
+			ID: rule.ID,
+			Name: rule.Name,
+			CreateTime: rule.CreateTime,
+			UpdateTime: rule.UpdateTime,
+			Duration: rule.Duration,
+			Expression: rule.Expression,
+			SubhealthConditionType: rule.SubhealthConditionType,
+			SubhealthThresholds:strconv.FormatFloat(rule.SubhealthThresholds, 'f', -1, 64),
+			FaultConditionType: rule.FaultConditionType,
+			FaultThresholds: strconv.FormatFloat(rule.FaultThresholds, 'f', -1, 64),
+			Severity: rule.Severity,
+		})
+	}
+	return ruleData, nil
 }
 
 func (o *operator) CreateRule(rule *Rule) error {
