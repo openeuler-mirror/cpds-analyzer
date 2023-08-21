@@ -61,7 +61,8 @@ func (o *operator) GetRules(filter, sortField, sortOrder string, pageNo, pageSiz
 	if err != nil {
 		return nil, err
 	}
-	var ruleData []Rules
+
+	ruleData := make([]Rules, 0)
 	for _, rule := range rules{
 		ruleData = append(ruleData, Rules{
 			ID: rule.ID,
