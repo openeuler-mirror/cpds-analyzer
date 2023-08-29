@@ -1,0 +1,12 @@
+[Unit]
+Description=cpds-analyzer Service
+After=network.target
+Requires=cpds-detector.service
+After=cpds-detector.service
+
+[Service]
+ExecStart=/usr/bin/cpds-analyzer
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
