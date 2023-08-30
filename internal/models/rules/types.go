@@ -1,12 +1,12 @@
-/* 
+/*
  *  Copyright 2023 CPDS Author
- *  
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- *  
+ *
  *       https://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +19,7 @@ package rules
 type Rule struct {
 	ID                     uint    `json:"id" gorm:"primaryKey;AUTO_INCREMENT"`
 	Name                   string  `json:"name" gorm:"unique;not null"`
-	Expression             string  `json:"expression" gorm:"not null;type:varchar(512)"`
+	Expression             string  `json:"expression" gorm:"not null;type:varchar(1024)"`
 	SubhealthConditionType string  `json:"subhealth_condition_type"`
 	SubhealthThresholds    float64 `json:"subhealth_thresholds"`
 	FaultConditionType     string  `json:"fault_condition_type"`
@@ -33,7 +33,7 @@ type Rule struct {
 type Rules struct {
 	ID                     uint    `json:"id" gorm:"primaryKey;AUTO_INCREMENT"`
 	Name                   string  `json:"name" gorm:"unique;not null"`
-	Expression             string  `json:"expression" gorm:"not null;type:varchar(512)"`
+	Expression             string  `json:"expression" gorm:"not null;type:varchar(1024)"`
 	SubhealthConditionType string  `json:"subhealth_condition_type"`
 	SubhealthThresholds    string `json:"subhealth_thresholds"`
 	FaultConditionType     string  `json:"fault_condition_type"`
