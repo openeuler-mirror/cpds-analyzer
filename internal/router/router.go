@@ -73,7 +73,6 @@ func initDatabaseTable(db *gorm.DB) error {
     if result != nil {
         return result
     }
-	db = db.Exec("USE cpds")
 	d := dbinitiator.New(db)
 	if err := d.Init(); err != nil {
 		return err
