@@ -35,8 +35,41 @@ type MariaDB struct {
 	MaxLifetime time.Duration
 }
 
-func (d *MariaDB) Connect() (*gorm.DB, error) {
+func(d *MariaDB) CheckDatabase() (*gorm.DB, error){
 	dsn := fmt.Sprintf(`%s:%s@tcp(%s:%v)/?charset=utf8mb4&parseTime=True&loc=Local`,
+		d.Username,
+		d.Password,
+		d.Host,
+		d.Port,
+	)
+	
+	db, err := gorm.Open(mysql.New(mysql.Config{
+		DSN:                       dsn,
+		DefaultStringSize:         256,
+		DisableDatetimePrecision:  true,
+		DontSupportRenameIndex:    true,
+		DontSupportRenameColumn:   true,
+		SkipInitializeWithVersion: false,
+	}), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+		DisableForeignKeyConstraintWhenMigrating: true,
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to database: %v", err)
+	}
+	result := db.Exec("CREATE DATABASE IF NOT EXISTS cpds").Error
+    if result != nil {
+        return nil, result
+    }
+	return db, nil
+
+}
+
+func (d *MariaDB) Connect() (*gorm.DB, error) {
+	dsn := fmt.Sprintf(`%s:%s@tcp(%s:%v)/cpds?charset=utf8mb4&parseTime=True&loc=Local`,
 		d.Username,
 		d.Password,
 		d.Host,
@@ -58,15 +91,29 @@ func (d *MariaDB) Connect() (*gorm.DB, error) {
 	})
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to database: %v", err)
+		if _, err = d.CheckDatabase(); err != nil {
+			return nil, fmt.Errorf("failed to connect to database: %v", err) 
+		}
+		db, err = gorm.Open(mysql.New(mysql.Config{
+			DSN:                       dsn,
+			DefaultStringSize:         256,
+			DisableDatetimePrecision:  true,
+			DontSupportRenameIndex:    true,
+			DontSupportRenameColumn:   true,
+			SkipInitializeWithVersion: false,
+		}), &gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				SingularTable: true,
+			},
+			DisableForeignKeyConstraintWhenMigrating: true,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed to connect to database: %v", err)
+		}
 	}
 
 	db.Set("gorm:table_options", "CHARSET=utf8mb4")
-	result := db.Exec("CREATE DATABASE IF NOT EXISTS cpds").Error
-    if result != nil {
-        return nil,result
-    }
-	db = db.Exec("USE cpds")
+
 	sqlDB, err := db.DB()
 	if err != nil {
 		return nil, err

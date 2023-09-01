@@ -69,10 +69,6 @@ func InitRouter(debug bool, config *config.Config, logger *zap.Logger, db *gorm.
 }
 
 func initDatabaseTable(db *gorm.DB) error {
-	result := db.Exec("CREATE DATABASE IF NOT EXISTS cpds").Error
-    if result != nil {
-        return result
-    }
 	d := dbinitiator.New(db)
 	if err := d.Init(); err != nil {
 		return err
